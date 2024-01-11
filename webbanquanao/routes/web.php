@@ -8,6 +8,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CityApi;
+use App\Http\Middleware\CheckUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,11 @@ use App\Http\Controllers\CityApi;
 |
 */
 Route::get('/get-geo-data', [CityApi::class, 'getGeoDataFromAPI']);
-Route::post('/login',[UserController::class,'index'])->name('login');
+Route::get('/login',[UserController::class,'index'])->name('form_login');
+Route::post('/loginUser',[UserController::class,'store'])->name('login');
 Route::prefix('/dashboard')->group(function(){
+
+
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
 
     Route::prefix('/product')->group(function (){
@@ -65,7 +69,7 @@ Route::prefix('/dashboard')->group(function(){
         Route::get('delete/{id}', [CategoriesController::class, 'destroy'])->name('delete_categories');
     });
     Route::prefix('/user')->group(function (){
-        Route::get('', [UserController::class, 'index'])->name('list_user');
+        // Route::get('', [UserController::class, 'index'])->name('list_user');
         Route::get('add',[UserController::class,'create'])->name('form_add_user');
         Route::post('add', [UserController::class, 'store'])->name('add_user');
         Route::get('edit', [UserController::class, 'edit'])->name('edit_user');
