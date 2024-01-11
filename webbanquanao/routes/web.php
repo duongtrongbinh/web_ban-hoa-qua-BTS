@@ -21,10 +21,10 @@ use App\Http\Middleware\CheckUser;
 |
 */
 Route::get('/get-geo-data', [CityApi::class, 'getGeoDataFromAPI']);
-Route::get('/login',[UserController::class,'index'])->name('form_login');
 Route::post('/loginUser',[UserController::class,'store'])->name('login');
 Route::prefix('/dashboard')->group(function(){
 
+    Route::get('/login',[UserController::class,'index'])->name('form_login');
 
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
 
@@ -68,12 +68,12 @@ Route::prefix('/dashboard')->group(function(){
         Route::put('update', [CategoriesController::class, 'update'])->name('update_categories');
         Route::get('delete/{id}', [CategoriesController::class, 'destroy'])->name('delete_categories');
     });
-    Route::prefix('/user')->group(function (){
-        // Route::get('', [UserController::class, 'index'])->name('list_user');
-        Route::get('add',[UserController::class,'create'])->name('form_add_user');
-        Route::post('add', [UserController::class, 'store'])->name('add_user');
-        Route::get('edit', [UserController::class, 'edit'])->name('edit_user');
-        Route::put('update', [UserController::class, 'update'])->name('update_user');
-        Route::get('delete/{id}', [UserController::class, 'destroy'])->name('delete_user');
-    });
-});
+    // Route::prefix('/user')->group(function (){
+    //     Route::get('', [UserController::class, 'index'])->name('list_user');
+    //     Route::get('add',[UserController::class,'create'])->name('form_add_user');
+    //     Route::post('add', [UserController::class, 'store'])->name('add_user');
+    //     Route::get('edit', [UserController::class, 'edit'])->name('edit_user');
+    //     Route::put('update', [UserController::class, 'update'])->name('update_user');
+    //     Route::get('delete/{id}', [UserController::class, 'destroy'])->name('delete_user');
+    // });
+})->middleware(CheckUser::class);

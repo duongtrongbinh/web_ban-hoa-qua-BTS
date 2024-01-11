@@ -88,7 +88,7 @@
       <li class="nav-heading">Configuration</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('list_user')}}">
+        <a class="nav-link collapsed" href="{{ route('form_login')}}">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>

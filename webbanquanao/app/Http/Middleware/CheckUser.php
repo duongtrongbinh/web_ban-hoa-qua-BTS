@@ -16,8 +16,14 @@ class CheckUser
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // dd(auth()->check());
         if(auth()->check()){
-            return redirect('login');
+            // dd(1);
+            // dd(auth()->user());
+            dd($request);
+        return $next($request);
+
+            // return redirect()->to('dashboard');
         }
         return $next($request);
     }

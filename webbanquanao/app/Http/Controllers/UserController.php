@@ -32,7 +32,7 @@ class UserController extends Controller
             'email'=>$request->email,
             'password'=>$request->password
         ], $remember)){
-            return route('/dashboard');
+            return view('dashboard.admin.trangchu');
         }
     }
 
