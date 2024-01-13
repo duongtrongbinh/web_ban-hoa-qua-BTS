@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CityApi;
-use App\Http\Middleware\CheckUser;
+// use App\Http\Middleware\CheckUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +21,13 @@ use App\Http\Middleware\CheckUser;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/get-geo-data', [CityApi::class, 'getGeoDataFromAPI']);
-Route::post('/loginUser',[UserController::class,'store'])->name('login');
+// Route::get('/get-geo-data', [CityApi::class, 'getGeoDataFromAPI']);
+    Route::get('/login',[AuthController::class,'index'])->name('form_login');
+    Route::post('/loginUser',[AuthController::class,'store'])->name('login');
+    // >middleware('admin.login')
 Route::prefix('/dashboard')->group(function(){
 
-    Route::get('/login',[UserController::class,'index'])->name('form_login');
+
 
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
 
@@ -68,12 +71,12 @@ Route::prefix('/dashboard')->group(function(){
         Route::put('update', [CategoriesController::class, 'update'])->name('update_categories');
         Route::get('delete/{id}', [CategoriesController::class, 'destroy'])->name('delete_categories');
     });
-    // Route::prefix('/user')->group(function (){
-    //     Route::get('', [UserController::class, 'index'])->name('list_user');
-    //     Route::get('add',[UserController::class,'create'])->name('form_add_user');
-    //     Route::post('add', [UserController::class, 'store'])->name('add_user');
-    //     Route::get('edit', [UserController::class, 'edit'])->name('edit_user');
-    //     Route::put('update', [UserController::class, 'update'])->name('update_user');
-    //     Route::get('delete/{id}', [UserController::class, 'destroy'])->name('delete_user');
-    // });
-})->middleware(CheckUser::class);
+    Route::prefix('/user')->group(function (){
+        Route::get('', [UserController::class, 'index'])->name('list_user');
+        Route::get('add',[UserController::class,'create'])->name('form_add_user');
+        Route::post('add', [UserController::class, 'store'])->name('add_user');
+        Route::get('edit', [UserController::class, 'edit'])->name('edit_user');
+        Route::put('update', [UserController::class, 'update'])->name('update_user');
+        Route::get('delete/{id}', [UserController::class, 'destroy'])->name('delete_user');
+    });
+});

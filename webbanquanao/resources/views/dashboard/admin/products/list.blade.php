@@ -33,20 +33,24 @@
           </tr>
         </thead>
         <tbody>
+          @foreach ($product as $item)
+          @php $count++;@endphp
             <tr>
-                <td>1</td>
-                <td>#1001</td>
-                <td>Ao phong</td>
-                <td>Danh muc</td>
-                <td>100</td>
-                <td>1000000</td>
-                <td>
-                    <a href="{{ route('edit_product',1)}}" class="btn btn-success bt-3" >
-                       Edit
-                    </a>
-                    <a href="" data-url="{{ route('delete_product',1)}}" class="btn btn-warning deleteProduct">Delete</a>
-                </td>
-            </tr>
+              <td>{{ $count}}</td>
+              <td>{{ $item->code}}</td>
+              <td>{{ $item->name}}</td>
+              <td>{{ $item->categoryP->name}}</td>
+              <td>{{ $item->quantity}}</td>
+              <td>{{ $item->price}}</td>
+              <td>
+                  <a href="{{ route('edit_product',[$item->id])}}" class="btn btn-success bt-3" >
+                    Edit
+                  </a>
+                  <a href="" data-url="{{ route('delete_product',[$item->id])}}" class="btn btn-warning deleteProduct">Delete</a>
+              </td>
+          </tr>
+          @endforeach
+
 
         </tbody>
       </table>

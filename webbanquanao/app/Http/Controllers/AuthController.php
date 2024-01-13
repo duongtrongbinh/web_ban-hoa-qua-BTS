@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
-        /**
+            /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        return view('dashboard.admin.users.user');
     }
 
     /**
@@ -26,7 +27,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        $remember = $request->has('remember_token') ? true : false;
+        if(auth()->attempt([
+            'email'=>$request->email,
+            'password'=>$request->password
+        ], $remember)){
+            return view('dashboard.admin.trangchu');
+        }
     }
 
     /**

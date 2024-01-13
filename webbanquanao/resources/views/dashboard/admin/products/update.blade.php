@@ -26,7 +26,7 @@
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('/dashboard')}}">Home</a></li>
-        <li class="breadcrumb-item active">Add Product</li>
+        <li class="breadcrumb-item active">Update Product</li>
       </ol>
     </nav>
   </div>
@@ -40,25 +40,25 @@
           <div class="row">     
             <div class="form-group col-4">
                 <label for="" class="form-lable mb-2">Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Nhập name ..." >
+                <input type="text" name="name" class="form-control" placeholder="Nhập name ..." value="{{ $product->name}}">
+                <input type="hidden" name="id" class="form-control" value="{{ $product->id}}">
             </div>
 
             <div class="form-group col-4">
                 <label for="" class="form-lable mb-2">Quantity</label>
-                <input type="number" name="quantity" class="form-control" placeholder="Nhập quantity ..." >
+                <input type="number" name="quantity" class="form-control" placeholder="Nhập quantity ..." value="{{ $product->quantity}}">
             </div>
 
             <div class="form-group col-4">
                 <label for="" class="form-lable mb-2">Price</label>
-                <input type="number" name="price" class="form-control" placeholder="Nhập price ..." >
+                <input type="number" name="price" class="form-control" placeholder="Nhập price ..."  value="{{ $product->price}}">
             </div>
           </div>
           <div class="row">
             <div class="form-group mt-2 col-4">
               <label class="form-lable mb-2">Select choose cateygory</label>
               <select class="form-select" name="category_id">
-                <option value="null" selected>Choose category</option>
-                {{-- {{!! $htmlSelect !!}} --}}
+                {{!! $htmlSelect !!}}
                 </select>
             </div>
 
@@ -69,29 +69,35 @@
 
             <div class="form-group mt-2 col-4">
               <label class="form-lable mb-2">Select Status</label>
-              <select class="form-select" name="category_id">
-                <option value="null" selected>Choose status</option>
-                {{-- {{!! $htmlSelect !!}} --}}
+              <select class="form-select" name="status" value="{{ $product->status}}">
+                  @foreach ($productStatus as $value =>$key)
+                    <option value="{{ $key}}">{{ $value}}</option>
+                  @endforeach
                 </select>
             </div>
+          </div>
+          <div class="d-flex justify-content-center mt-2">
+            @foreach ($imagePro as $value)
+                  <img width="150px" height="auto" src="{{ $value->code_image}}" alt="{{ $value->name}}">
+            @endforeach
           </div>
           <div class="row">
               <div class="form-group col-4 mt-2">
                 <label for="" class="form-lable mb-2">Dimensions</label>
-                <input type="text" name="dimensions" class="form-control" placeholder="Nhập Dimensions ..." >
+                <input type="text" name="dimension" class="form-control" placeholder="Nhập Dimensions ..." value="{{ $product->dimension}}">
             </div>
             <div class="form-group col-4 mt-2">
                 <label for="" class="form-lable mb-2">Weight</label>
-                <input type="text" name="weight" class="form-control" placeholder="Nhập weight ..." >
+                <input type="text" name="weight" class="form-control" placeholder="Nhập weight ..." value="{{ $product->weight}}">
             </div>
             <div class="form-group col-4 mt-2">
                 <label for="" class="form-lable mb-2">Materials</label>
-                <input type="text" name="material" class="form-control" placeholder="Nhập materials ..." >
+                <input type="text" name="material" class="form-control" placeholder="Nhập materials ..." value="{{ $product->material}}">
             </div>
           </div>
           <div class="form-group col mt-2">
             <label for="" class="form-lable mb-2">information content</label>
-            <textarea class="form-control my-editor-tinymce4" name="content" placeholder="Nhập content ..."></textarea>
+            <textarea class="form-control my-editor-tinymce4" name="content" placeholder="Nhập content ...">{{ $product->content}}</textarea>
           </div>
 
         </div>

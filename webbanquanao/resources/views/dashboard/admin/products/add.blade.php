@@ -58,7 +58,7 @@
               <label class="form-lable mb-2">Select choose cateygory</label>
               <select class="form-select" name="category_id">
                 <option value="null" selected>Choose category</option>
-                {{-- {{!! $htmlSelect !!}} --}}
+                {{!! $htmlSelect !!}}
                 </select>
             </div>
 
@@ -69,16 +69,18 @@
 
             <div class="form-group mt-2 col-4">
               <label class="form-lable mb-2">Select Status</label>
-              <select class="form-select" name="category_id">
+              <select class="form-select" name="status">
                 <option value="null" selected>Choose status</option>
-                {{-- {{!! $htmlSelect !!}} --}}
+                @foreach ($productStatus as $value =>$key)
+                  <option value="{{ $key}}">{{ $value}}</option>
+                @endforeach
                 </select>
             </div>
           </div>
           <div class="row">
               <div class="form-group col-4 mt-3">
                 <label for="" class="form-lable mb-2">Dimensions</label>
-                <input type="text" name="dimensions" class="form-control" placeholder="Nhập Dimensions ..." >
+                <input type="text" name="dimension" class="form-control" placeholder="Nhập Dimensions ..." >
             </div>
             <div class="form-group col-4 mt-3">
                 <label for="" class="form-lable mb-2">Weight</label>

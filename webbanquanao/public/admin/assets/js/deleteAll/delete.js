@@ -41,7 +41,7 @@ function actionDelete(e) {
       });
 }
 $(function () {
-    // $(document).on('click','.deleteProductDetail', actionDeleteProductDetail)
+    $(document).on('click','.deleteProduct', actionDelete)
     $(document).on('click','.deleteCategory', actionDelete)
     $(document).on('click','.deleteSlide', actionDelete)
 

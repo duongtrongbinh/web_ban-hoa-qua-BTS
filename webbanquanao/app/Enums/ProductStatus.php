@@ -11,7 +11,14 @@ use BenSampo\Enum\Enum;
  */
 final class ProductStatus extends Enum
 {
-    const OptionOne = 0;
-    const OptionTwo = 1;
-    const OptionThree = 2;
+    const DANG_BAN = 0;
+    const NGUNG_BAN = 1;
+    const LUU_KHO = 2;
+    public static function getArrStatus(){
+        return [
+            'đang bán'=> self::DANG_BAN,
+            'ngưng bán'=> self::NGUNG_BAN,
+            'lưu kho'=> self::LUU_KHO
+        ];
+    }
 }

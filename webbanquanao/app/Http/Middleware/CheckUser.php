@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 
 class CheckUser
@@ -16,15 +17,9 @@ class CheckUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // dd(auth()->check());
-        if(auth()->check()){
-            // dd(1);
-            // dd(auth()->user());
-            dd($request);
-        return $next($request);
-
-            // return redirect()->to('dashboard');
+        if(!auth()->check()){
+            return redirect()->route('/dashboard');
         }
-        return $next($request);
+        return redirect()->route('form_login');
     }
 }
