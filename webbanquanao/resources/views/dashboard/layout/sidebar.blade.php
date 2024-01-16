@@ -72,7 +72,7 @@
         </a>
         <ul id="product-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('list_product')}}">
+            <a href="{{ route('show_list_product')}}">
               <i class="bi bi-circle"></i><span>List Product</span>
             </a>
           </li>

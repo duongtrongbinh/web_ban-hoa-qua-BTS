@@ -10,11 +10,14 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Enums\ProductStatus;
 use App\Traits\StorageTraits;
-
+use DataTables;
 use View;
 use DB;
 use Log;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+// use App\Imports\ProductExport;
+use App\Exports\ProductExport;
 
 class ProductController extends Controller
 {
@@ -42,12 +45,41 @@ class ProductController extends Controller
         $htmlSelect = $recusive->categoryRecusive($parentid);
         return $htmlSelect;
     }
-    public function index()
+    // public function index()
+    // {
+    //     $count = 0;
+    //     $product =$this->product->get();
+    //     return view('dashboard.admin.products.list',compact('product','count'));
+    // }
+    public function show()
     {
-        $count = 0;
-        $product =$this->product->get();
-        return view('dashboard.admin.products.list',compact('product','count'));
+    
+        return view('dashboard.admin.products.list');
     }
+    public function index(Request $request)
+    {
+  
+        if ($request->ajax()) {
+            $data = ProductModel::latest()->get();
+            foreach ($data as $value) {
+                $value->category = $value->categoryP->name;
+            }
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($id){
+                    $linkedit =route("edit_product",$id);
+                    $linkDelete = route("delete_product",$id);
+                    $actionBtn = "<a href='$linkedit' class='btn btn-success btn-sm' style='margin-right: 5px'>Edit</a><a data-url='$linkDelete' class='btn btn-danger btn-sm deleteProduct'>Delete</a>";
+                    return $actionBtn;
+                })
+                ->editColumn('price', function($object){
+                    return number_format($object->price)." VND";
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -67,7 +99,7 @@ class ProductController extends Controller
             DB::beginTransaction();
                 $createProduct = $request->except('_token','code');
                 $createProduct['slug'] = Str::slug($request->name);
-                $createProduct['code'] = '#'.Carbon::now()->minute.Carbon::now()->hour.Carbon::now()->day.Carbon::now()->month.Carbon::now()->year;
+                $createProduct['code'] = '#'.Carbon::now()->second.Carbon::now()->minute.Carbon::now()->hour.Carbon::now()->day.Carbon::now()->month.Carbon::now()->year;
                 $productNew = $this->product->create($createProduct);
                 if($request->hasFile('code')){
                     foreach ($request->code as $item) {
@@ -80,7 +112,7 @@ class ProductController extends Controller
                     }
                 }
             DB::commit();
-            return redirect()->route('list_product');
+            return redirect()->route('show_list_product');
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error("message: " . $exception->getMessage());
@@ -90,10 +122,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+ 
 
     /**
      * Show the form for editing the specified resource.
@@ -119,8 +148,8 @@ class ProductController extends Controller
                 $updateProduct['code'] = $product->code;
                 $productNew = $product->update($updateProduct);
                 if($request->hasFile('code')){
+                    $this->imageProduct->where('product_id',$request->id)->delete();
                     foreach ($request->code as $item) {
-                        $this->imageProduct->where('product_id',$request->id)->delete();
                         $dataImageMui = $this->storagetrait->storageTraitUploadMuity($item, 'product');
                         $this->imageProduct->create([
                             'product_id'=>$request->id,
@@ -130,7 +159,7 @@ class ProductController extends Controller
                     }
                 }
             DB::commit();
-            return redirect()->route('list_product');
+            return redirect()->route('show_list_product');
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error("message: " . $exception->getMessage());
@@ -156,4 +185,10 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
+    public function fileExport() 
+    {
+        // return (new ProductExport(3))->download('list-product-collection.xlsx');
+        return Excel::download(new ProductExport, 'list-product-collection.xlsx');
+    } 
 }

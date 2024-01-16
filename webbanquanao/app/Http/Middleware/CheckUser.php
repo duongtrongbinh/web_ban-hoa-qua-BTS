@@ -17,9 +17,9 @@ class CheckUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!auth()->check()){
-            return redirect()->route('/dashboard');
+        if(auth()->check()){
+            return redirect()->to('/dashboard');
         }
-        return redirect()->route('form_login');
+        return redirect()->to('form_login');
     }
 }

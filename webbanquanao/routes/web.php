@@ -32,7 +32,9 @@ Route::prefix('/dashboard')->group(function(){
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
 
     Route::prefix('/product')->group(function (){
-        Route::get('', [ProductController::class, 'index'])->name('list_product');
+        Route::get('', [ProductController::class, 'show'])->name('show_list_product');
+        Route::get('/list', [ProductController::class, 'index'])->name('list_product');
+        Route::get('/export', [ProductController::class, 'fileExport'])->name('export_list_product');
         Route::get('add',[ProductController::class,'create'])->name('form_add_product');
         Route::post('add', [ProductController::class, 'store'])->name('add_product');
         Route::get('edit/{id}', [ProductController::class, 'edit'])->name('edit_product');

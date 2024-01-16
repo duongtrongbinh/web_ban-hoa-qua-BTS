@@ -1,26 +1,36 @@
 @extends('dashboard.layout.master')
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('admin/assets/js/deleteAll/delete.js') }}"></script>
+@section('css')
+<link rel="stylesheet" href="{{ asset('admin/assets/vendor/datatable/index.min.css') }}" />
 @endsection
 @section('content')
 <div class="pagetitle">
-    <h1>Dashboard</h1>
-    <nav>
+    <div class="d-flex" style="justify-content: space-between">
+      <h1>Dashboard</h1>
+      <div>
+        <a class="btn btn-outline-success pr-3" href="{{ route('export_list_product') }}">Import</a>  
+        <a class="btn btn-outline-success pr-3" href="{{ route('export_list_product') }}">Export</a>  
+      </div>
+    </div>
+    <nav >
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('/dashboard')}}">Home</a></li>
-        <li class="breadcrumb-item active">Product</li>
+        <li class="breadcrumb-item">Product</li>
+        <li class="breadcrumb-item active">List Product</li>
       </ol>
     </nav>
   </div>
 
+{{-- <style>
+  .c{
+    justify-content:space-between
+  }
+</style> --}}
 
 <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">List product</h5>
+    <div class="card-body mt-5">
 
       <!-- Table with stripped rows -->
-      <table class="table table-striped text-center">
+      <table class="table table-striped datatableProduct" >
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -33,31 +43,42 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($product as $item)
-          @php $count++;@endphp
-            <tr>
-              <td>{{ $count}}</td>
-              <td>{{ $item->code}}</td>
-              <td>{{ $item->name}}</td>
-              <td>{{ $item->categoryP->name}}</td>
-              <td>{{ $item->quantity}}</td>
-              <td>{{ $item->price}}</td>
-              <td>
-                  <a href="{{ route('edit_product',[$item->id])}}" class="btn btn-success bt-3" >
-                    Edit
-                  </a>
-                  <a href="" data-url="{{ route('delete_product',[$item->id])}}" class="btn btn-warning deleteProduct">Delete</a>
-              </td>
-          </tr>
-          @endforeach
-
-
         </tbody>
       </table>
       <!-- End Table with stripped rows -->
 
     </div>
   </div>
+@endsection
+@section('js')
+<script src="{{ asset('admin/assets/vendor/datatable/index.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('admin/assets/js/deleteAll/delete.js') }}"></script>
+<script>
+  $(function () {
+    // $.fn.dataTable.ext.errMode = 'throw';
+    let table = $('.datatableProduct').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("list_product") }}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'code', name: 'code'},
+            {data: 'name', name: 'name'},
+            {data: 'category', name: 'category'},
+            {data: 'quantity', name: 'quantity'},
+            {data: 'price', name: 'price'},
+            {
+                data: 'action', 
+                name: 'action', 
+                orderable: true, 
+                searchable: true
+            },
+        ]
+    });
+    
+  });
+</script>
 @endsection
 
 
