@@ -13,4 +13,8 @@ class BlogModel extends Model
     use SoftDeletes;
     public $table = 'blogs';
     protected  $guarded = [];
+    public function userB()
+    {
+        return $this->belongsTo(User::class,"user_id");
+    }
 }

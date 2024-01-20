@@ -53,7 +53,7 @@
         </a>
         <ul id="blogs-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('list_blog')}}">
+            <a href="{{ route('show_list_blog')}}">
               <i class="bi bi-circle"></i><span>List Blog</span>
             </a>
           </li>

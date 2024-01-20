@@ -42,11 +42,12 @@ Route::prefix('/dashboard')->group(function(){
         Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('delete_product');
     });
     Route::prefix('/blog')->group(function (){
-        Route::get('', [BlogController::class, 'index'])->name('list_blog');
+        Route::get('/list', [BlogController::class, 'index'])->name('list_blog');
+        Route::get('', [BlogController::class, 'show'])->name('show_list_blog');
         Route::get('add',[BlogController::class,'create'])->name('form_add_blog');
         Route::post('add', [BlogController::class, 'store'])->name('add_blog');
         Route::get('edit/{id}', [BlogController::class, 'edit'])->name('edit_blog');
-        Route::put('update', [BlogController::class, 'update'])->name('update_blog');
+        Route::put('update/{id}', [BlogController::class, 'update'])->name('update_blog');
         Route::get('delete/{id}', [BlogController::class, 'destroy'])->name('delete_blog');
     });
     Route::prefix('/setting')->group(function (){
