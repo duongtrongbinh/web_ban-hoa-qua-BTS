@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
+// use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SettingController;
@@ -22,12 +22,10 @@ use App\Http\Controllers\CityApi;
 |
 */
 // Route::get('/get-geo-data', [CityApi::class, 'getGeoDataFromAPI']);
-    Route::get('/login',[AuthController::class,'index'])->name('form_login');
-    Route::post('/loginUser',[AuthController::class,'store'])->name('login');
-    // >middleware('admin.login')
+    // Route::get('/login',[AuthController::class,'index'])->name('form_login');
+    // Route::post('/loginUser',[AuthController::class,'store'])->name('login');
+    // // >middleware('admin.login')
 Route::prefix('/dashboard')->group(function(){
-
-
 
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
 
@@ -52,11 +50,8 @@ Route::prefix('/dashboard')->group(function(){
     });
     Route::prefix('/setting')->group(function (){
         Route::get('', [SettingController::class, 'index'])->name('list_setting');
-        Route::get('add',[SettingController::class,'create'])->name('form_add_setting');
-        Route::post('add', [SettingController::class, 'store'])->name('add_setting');
         Route::get('edit/{id}', [SettingController::class, 'edit'])->name('edit_setting');
         Route::put('update', [SettingController::class, 'update'])->name('update_setting');
-        Route::get('delete/{id}', [SettingController::class, 'destroy'])->name('delete_setting');
     });
     Route::prefix('/slide')->group(function (){
         Route::get('', [SlideController::class, 'index'])->name('list_slide');

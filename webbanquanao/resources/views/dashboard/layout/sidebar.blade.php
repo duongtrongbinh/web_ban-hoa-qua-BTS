@@ -101,27 +101,6 @@
         </a>
       </li><!-- End setting Nav -->
 
-      {{-- <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
-        </a>
-      </li><!-- End Login Page Nav --> --}}
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
@@ -135,6 +114,30 @@
           <span>Blank</span>
         </a>
       </li><!-- End Blank Page Nav -->
+
+      <li class="nav-heading">Permissions</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('form_login')}}">
+          <i class="ri-file-user-line"></i>
+          <span>User Role</span>
+        </a>
+      </li><!-- End Role Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('form_login')}}">
+          <i class="ri-remote-control-line"></i>
+          <span>Role</span>
+        </a>
+      </li><!-- End Role Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('form_login')}}">
+          <i class="ri-shield-user-fill"></i>
+          <span>Permission</span>
+        </a>
+      </li><!-- End Permission Page Nav -->
+
 
     </ul>
 

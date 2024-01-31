@@ -7,36 +7,17 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    protected $setting;
+    public function __construct(){
+        $this->setting = new SettingModel();
+    }
        /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.admin.settings.list');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('dashboard.admin.settings.add');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        $setting = $this->setting->find(1);
+        return view('dashboard.admin.settings.list',compact('setting'));
     }
 
     /**
@@ -44,22 +25,19 @@ class SettingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $settingone = $this->setting->find($id);
+        return view('dashboard.admin.settings.update', compact('settingone'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $updateSetting = $request->except('_token','_method');
+        $this->setting->find($request->id)->update($updateSetting);
+        return redirect()->route('list_setting');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
 }

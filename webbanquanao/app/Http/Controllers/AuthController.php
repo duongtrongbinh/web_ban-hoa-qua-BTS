@@ -27,6 +27,7 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(bcrypt('12345678'));
         $remember = $request->has('remember_token') ? true : false;
         if(auth()->attempt([
             'email'=>$request->email,
