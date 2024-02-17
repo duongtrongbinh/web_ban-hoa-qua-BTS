@@ -65,7 +65,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
-            {data: 'category', name: 'category'},
+            {data: 'category_name', name: 'category'},
             {data: 'quantity', name: 'quantity'},
             {data: 'price', name: 'price'},
             {

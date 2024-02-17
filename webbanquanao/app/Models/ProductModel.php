@@ -15,6 +15,6 @@ class ProductModel extends Model
     protected  $guarded = [];
     public function categoryP()
     {
-        return $this->belongsTo(CategoriesModel::class,"category_id");
+        return $this->hasMany(CategoriesModel::class,"category_id");
     }
 }

@@ -15,17 +15,20 @@
           <i class="bi bi-menu-button-wide"></i><span>Categories</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="category-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          {{-- @can('viewAny', App\Models\CategoriesModel::class) --}}
           <li>
             <a href="{{ route('list_categories')}}">
               <i class="bi bi-circle"></i><span>List Category</span>
             </a>
           </li>
+          {{-- @endcan --}}
+          {{-- @can('create', App\Models\CategoriesModel::class) --}}
           <li>
             <a href="{{ route('form_add_categories')}}">
               <i class="bi bi-circle"></i><span>Add Category</span>
             </a>
           </li>
-
+          {{-- @endcan --}}
         </ul>
       </li><!-- End category Nav -->
 
@@ -88,7 +91,7 @@
       <li class="nav-heading">Configuration</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('form_login')}}">
+        <a class="nav-link collapsed" href="{{ route('profileUser')}}">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
@@ -118,27 +121,18 @@
       <li class="nav-heading">Permissions</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('form_login')}}">
+        <a class="nav-link collapsed" href="{{ route('list_user')}}">
           <i class="ri-file-user-line"></i>
-          <span>User Role</span>
+          <span>List User</span>
         </a>
       </li><!-- End Role Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('form_login')}}">
+        <a class="nav-link collapsed" href="{{ route('list_role')}}">
           <i class="ri-remote-control-line"></i>
           <span>Role</span>
         </a>
       </li><!-- End Role Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('form_login')}}">
-          <i class="ri-shield-user-fill"></i>
-          <span>Permission</span>
-        </a>
-      </li><!-- End Permission Page Nav -->
-
-
     </ul>
 
   </aside><!-- End Sidebar-->

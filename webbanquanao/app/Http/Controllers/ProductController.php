@@ -53,17 +53,19 @@ class ProductController extends Controller
     // }
     public function show()
     {
-    
+        // if (auth()->user()->cannot('viewAny', $this->product)) {
+        //     return view('dashboard.layout.403');
+        // }
         return view('dashboard.admin.products.list');
     }
     public function index(Request $request)
     {
-  
+ 
         if ($request->ajax()) {
-            $data = ProductModel::latest()->get();
-            foreach ($data as $value) {
-                $value->category = $value->categoryP->name;
-            }
+            $data = ProductModel::join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'categories.name as category_name')
+            ->get();
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($id){
@@ -86,6 +88,9 @@ class ProductController extends Controller
      */
     public function create()
     {
+        // if (auth()->user()->cannot('create', $this->product)) {
+        //     return view('dashboard.layout.403');
+        // }
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.products.add',compact('htmlSelect'));
     }
@@ -95,6 +100,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // if (auth()->user()->cannot('create', $this->product)) {
+        //     return view('dashboard.layout.403');
+        // }
         try {
             DB::beginTransaction();
                 $createProduct = $request->except('_token','code');
@@ -129,6 +137,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
+        // if (auth()->user()->cannot('update', $this->product)) {
+        //     return view('dashboard.layout.403');
+        // }
         $product = $this->product->find($id);
         $imagePro = $this->imageProduct->where('product_id',$id)->get();
         $htmlSelect = $this->getCategory($product->category_id);
@@ -142,6 +153,9 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
+            // if (auth()->user()->cannot('update', $this->product)) {
+            //     return view('dashboard.layout.403');
+            // }
                 $product = $this->product->find($request->id);
                 $updateProduct = $request->except('_token','code');
                 $updateProduct['slug'] = Str::slug($request->name);

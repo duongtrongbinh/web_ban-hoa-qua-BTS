@@ -13,4 +13,8 @@ class RoleModel extends Model
     use SoftDeletes;
     public $table = 'role';
     protected  $guarded = [];
+    public function permissionRole()
+    {
+        return $this->belongsToMany(PermissionsModel::class,"role_permissions","role_id","permission_id");
+    }
 }

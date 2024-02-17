@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SlideController;
+use App\Http\Controllers\APi\HomeController;
+
 
 
 /*
@@ -19,6 +20,19 @@ use App\Http\Controllers\SlideController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::prefix('slide')->group(function () {
-    Route::get('/',[SlideController::class, 'indexapi']);
+Route::prefix('category')->group(function () {
+    Route::get('/',[HomeController::class, 'index']);
 });
+
+
+
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('login', 'api\UserController@login');
+// Route::post('register', 'api\UserController@register');
+// Route::group(['middleware' => 'auth:api'], function() {
+//     Route::post('details', 'api\UserController@details');
+// });

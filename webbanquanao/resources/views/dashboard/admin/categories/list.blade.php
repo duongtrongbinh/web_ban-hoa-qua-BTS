@@ -41,8 +41,12 @@
             <th scope="row">{{ $count}}</th>
             <td>{{ $item->name}}</td>
             <td>
-                <a href="{{ route('edit_categories',[$item->id])}}" class="btn btn-success">Edit</a>
+              {{-- @can('update', App\Models\CategoriesModel::class)   --}}
+                <a  href="{{ route('edit_categories',[$item->id])}}" class="btn btn-success" selected>Edit</a>
+              {{-- @endcan --}}
+              {{-- @can('delete', App\Models\CategoriesModel::class) --}}
                 <a data-url="{{ route('delete_categories',[$item->id])}}" class="btn btn-warning deleteCategory">Delete</a>
+              {{-- @endcan --}}
             </td>
             @endforeach
           </tr>

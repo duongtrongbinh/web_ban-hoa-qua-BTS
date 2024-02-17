@@ -6,14 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    
+    use SoftDeletes;
+    public $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +26,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'name_avatar',
+        'image_avatar',
+        'desc',
+        'birthday'
     ];
 
     /**
@@ -45,4 +53,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function roles()
+    {
+        return $this->belongsToMany(RoleModel::class,"user_role","user_id","role_id");
+    }
+
+    public function checkPermission($permission){
+        $roles = auth()->user()->roles;
+        
+        foreach ($roles as $value) {
+            $per = $value->permissionRole;
+            foreach ($per as $key) {
+                $x = $key->slug;
+                if($x == $permission){
+                    return true;
+                }
+            }
+
+        }
+        return false;
+
+    }
 }

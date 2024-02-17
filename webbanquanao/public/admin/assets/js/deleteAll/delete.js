@@ -45,6 +45,8 @@ $(function () {
     $(document).on('click','.deleteCategory', actionDelete)
     $(document).on('click','.deleteSlide', actionDelete)
     $(document).on('click','.deleteBlog', actionDelete)
+    $(document).on('click','.deleteUser', actionDelete)
+    $(document).on('click','.deleteRole', actionDelete)
 
     
 

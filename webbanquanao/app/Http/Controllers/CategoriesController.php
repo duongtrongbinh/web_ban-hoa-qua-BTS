@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoriesModel;
 use Illuminate\Http\Request;
+use App\Models\CategoriesModel;
 use App\Conponents\Recusives;
 use Illuminate\Support\Str;
 
@@ -26,6 +26,9 @@ class CategoriesController extends Controller
 
     public function index()
     {
+        if (auth()->user()->cannot('viewAny', $this->category)) {
+            return view('dashboard.layout.403');
+        }
         $list = $this->category->all();
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.categories.list',compact('list','htmlSelect'));
@@ -36,6 +39,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->cannot('create', $this->category)) {
+            return view('dashboard.layout.403');
+        }
         $list = $this->category->all();
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.categories.add',compact('htmlSelect'));
@@ -46,6 +52,9 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->cannot('create', $this->category)) {
+            return view('dashboard.layout.403');
+        }
         $this->category->create([
             'name'=> $request->name,
             'parent_id'=>$request->parent_id,
@@ -59,6 +68,9 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
+        if (auth()->user()->cannot('update', $this->category)) {
+            return view('dashboard.layout.403');
+        }
         $oneCategory = $this->category->find($id);
         $htmlSelect = $this->getCategory($oneCategory->parent_id);
         return view('dashboard.admin.categories.update',compact('oneCategory','htmlSelect'));

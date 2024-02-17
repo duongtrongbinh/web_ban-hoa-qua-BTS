@@ -31,21 +31,27 @@ class SlideController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->cannot('viewAny', $this->slide)) {
+            return view('dashboard.layout.403');
+        }
         $list = $this->slide->all();
         return view('dashboard.admin.slides.list',compact('list'));
     }
-    // list api 
-    function indexapi(){
-        $list = $this->slide->all();
+    // // list api 
+    // function indexapi(){
+    //     $list = $this->slide->all();
         
-        return response()->json($list);
-    }
+    //     return response()->json($list);
+    // }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        if (auth()->user()->cannot('create', $this->slide)) {
+            return view('dashboard.layout.403');
+        }
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.slides.add',compact('htmlSelect'));
     }
@@ -55,7 +61,9 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
-
+        if (auth()->user()->cannot('create', $this->slide)) {
+            return view('dashboard.layout.403');
+        }
         $imageSlide = $this->storageTraits->storageTraitUploadMuity($request->code_image, 'slide');
         $this->slide->create([
             'title'=>$request->title,
@@ -82,6 +90,9 @@ class SlideController extends Controller
      */
     public function edit(string $id)
     {
+        if (auth()->user()->cannot('update', $this->slide)) {
+            return view('dashboard.layout.403');
+        }
         $slide = $this->slide->find($id);
         return view('dashboard.admin.slides.update',compact('slide'));
     }
@@ -91,7 +102,9 @@ class SlideController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        if (auth()->user()->cannot('update', $this->slide)) {
+            return view('dashboard.layout.403');
+        }
         $slide = $this->slide->find($id);
         $imm = $slide->name_image;
         if((!$request->code_image) || ($imm == $request->code_image)){

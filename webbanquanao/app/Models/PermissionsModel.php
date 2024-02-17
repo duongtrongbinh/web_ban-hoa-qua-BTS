@@ -13,4 +13,8 @@ class PermissionsModel extends Model
     use SoftDeletes;
     public $table = 'permissions';
     protected  $guarded = [];
+    public function permissions (){
+        return $this->hasMany(PermissionsModel::class, "parent_id");
+    }
+
 }
