@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 
 
 Route::get('/login',[AuthController::class,'index'])->name('form_login');
+Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 Route::post('/loginUser',[AuthController::class,'store'])->name('login');
 
 Route::prefix('/dashboard')->group(function(){

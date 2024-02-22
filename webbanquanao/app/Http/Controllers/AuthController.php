@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -35,6 +36,11 @@ class AuthController extends Controller
         ], $remember)){
             return view('dashboard.admin.trangchu');
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return view('dashboard.admin.users.user');
     }
 
     /**

@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-// use Laravel\Passport\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 
 class AuthServiceProvider extends ServiceProvider
 {
-    // use HasApiTokens;
+    use HasApiTokens;
     /**
      * The model to policy mappings for the application.
      *

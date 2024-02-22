@@ -34,6 +34,7 @@ class CategoriesController extends Controller
         return view('dashboard.admin.categories.list',compact('list','htmlSelect'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      */

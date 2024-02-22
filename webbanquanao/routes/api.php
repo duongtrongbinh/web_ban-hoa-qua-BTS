@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APi\HomeController;
+use App\Http\Controllers\APi\UserController;
+use App\Http\Controllers\APi\ProductController;
+use App\Http\Controllers\APi\BlogController;
+use App\Models\User;
+
 
 
 
@@ -17,22 +22,28 @@ use App\Http\Controllers\APi\HomeController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return auth()->user();
 });
-Route::prefix('category')->group(function () {
-    Route::get('/',[HomeController::class, 'index']);
+Route::middleware('auth:api')->group(function () {
+    // product, blog, comment product, comment blog, account, profile account, seeting, slide, cart, pay
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/product/{id}', [ProductController::class, 'show']);
+    Route::get('/product/addToCart/{id}/{quantity}', [ProductController::class, 'addCart']);
+
 });
 
+Route::get('users', function() {
+    return User::all();
+});
 
+Route::group(['namespace'=>'APi'], function(){
+    Route::post('/login', [UserController::class, 'login']);
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:api');
+});
 
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::post('login', 'api\UserController@login');
-// Route::post('register', 'api\UserController@register');
-// Route::group(['middleware' => 'auth:api'], function() {
-//     Route::post('details', 'api\UserController@details');
-// });
