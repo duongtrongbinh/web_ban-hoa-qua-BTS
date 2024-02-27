@@ -50,7 +50,7 @@ class ProductController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        $xx = session('cart');
+        $xx = session()->get('cart');
         return response()->json($xx);
     }
 }
