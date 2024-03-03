@@ -4,5 +4,9 @@ export interface Icart {
     price:number;
     quantity:number;
     code_image:string;
-    name_image:string;
+    name_image:number;
+    width:number;
+    weight:number;
+    length:number;
+    height:number;
 }

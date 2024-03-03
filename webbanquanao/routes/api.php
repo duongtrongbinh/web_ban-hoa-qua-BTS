@@ -6,6 +6,7 @@ use App\Http\Controllers\APi\HomeController;
 use App\Http\Controllers\APi\UserController;
 use App\Http\Controllers\APi\ProductController;
 use App\Http\Controllers\APi\BlogController;
+use App\Http\Controllers\APi\vnpay\Pay;
 use App\Models\User;
 
 
@@ -34,6 +35,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/product/{id}', [ProductController::class, 'show']);
     Route::get('/product/addToCart/{id}/{quantity}', [ProductController::class, 'addCart']);
+    Route::post('/bill', [Pay::class, 'medium1']);
+
 
 });
 

@@ -1,1 +1,246 @@
-<p>login-oder works!</p>
+<div class="container">
+  <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+    <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+      Home
+      <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+    </a>
+
+    <span class="stext-109 cl4"> Thanh toán </span>
+  </div>
+</div>
+<form (ngSubmit)="onSubmit(bill)" #bill="ngForm">
+  <div class="container">
+    <div class="row">
+      <div class="col-7">
+        <div class="row">
+          <h3 class="mt-5 mb-3">Thông tin giao hàng</h3>
+          <!-- No Labels Form -->
+
+          <div class="col-md-6 form-group">
+            <label>Họ và tên:</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Your Name"
+              name="name"
+              ngModel
+            />
+            <div class="text-danger" *ngIf="nameErr != ''">
+              {{ nameErr }}
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Số điện thoại</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="0123456789"
+              name="phone"
+              ngModel
+            />
+            <div class="text-danger" *ngIf="phoneErr != ''">
+              {{ phoneErr }}
+            </div>
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Tỉnh/ thành phố:</label>
+            <select
+              class="form-select"
+              (change)="getprovince($event)"
+              name="province"
+              ngModel
+            >
+              <option selected>Choose...</option>
+              <option
+                [value]="province.ProvinceID"
+                *ngFor="let province of Province.data"
+              >
+                {{ province.ProvinceName }}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="provinceErr != ''">
+              {{ provinceErr }}
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label>Quận/ huyện:</label>
+            <select
+              class="form-select"
+              (change)="getdistrict($event)"
+              [disabled]="ProvinceID ? false : true"
+              name="district"
+              ngModel
+            >
+              <option selected>Choose...</option>
+              <option
+                *ngFor="let dis of District.data"
+                [value]="dis.DistrictID"
+              >
+                {{ dis.DistrictName }}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="districtErr != ''">
+              {{ districtErr }}
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label>Thị trấn/ xã:</label>
+            <select
+              class="form-select"
+              (change)="Moneyship($event)"
+              [disabled]="DistrictID ? false : true"
+              name="ward"
+              ngModel
+            >
+              <option selected>Choose...</option>
+              <option *ngFor="let ward of Ward.data" [value]="ward.WardCode">
+                {{ ward.WardName }}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="wardErr != ''">
+              {{ wardErr }}
+            </div>
+          </div>
+          <div class="col-12 form-group">
+            <label>Địa chỉ :</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="số nhà, đường, ngõ ..."
+              name="address"
+              ngModel
+            />
+            <div class="text-danger" *ngIf="addressErr != ''">
+              {{ addressErr }}
+            </div>
+          </div>
+          <div class="col-md-12 form-group">
+            <label>Ghi chú:</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="ghi chú"
+              name="note"
+              ngModel
+            />
+          </div>
+
+          <h3 class="mt-3 mb-3">Phương thức thanh toán</h3>
+
+          <div class="form-control">
+            <div class="form-check mt-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="TT"
+                value="VNPAYQR"
+                ngModel
+              />
+              <label class="form-check-label"> Thanh toán vnpay </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="TT"
+                value="TTTM"
+                ngModel
+              />
+              <label class="form-check-label"> Thanh toán tiền mặt </label>
+            </div>
+            <div class="text-danger" *ngIf="TTErr != ''">
+              {{ TTErr }}
+            </div>
+          </div>
+
+          <h3 class="mt-3 mb-3">Sản phẩm (2)</h3>
+          <div class="">
+            <table class="table-shopping-cart">
+              <tr class="table_row" *ngFor="let product of products">
+                <td class="">
+                  <div class="how-itemcart1">
+                    <img
+                      src="{{ url + product.code_image }}"
+                      alt="{{ product.name_image }}"
+                    />
+                  </div>
+                </td>
+                <td class="">{{ product.name }}</td>
+
+                <td class="">Số lượng: {{ product.quantity }}</td>
+                <td class="pl-5">
+                  {{
+                    sumOneProduct(product.quantity, product.price)
+                      | number : "1.0-0"
+                  }}
+                  VND
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div
+          class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm"
+        >
+          <h2 class="mb-4">Chi tiết đơn hàng:</h2>
+
+          <div class="flex-w flex-t p-b-13">
+            <div class="">
+              <span class="stext-110 cl2"> Giá trị đơn hàng:</span>
+            </div>
+
+            <div class="ml-2">
+              <span class="mtext-110 cl2">
+                {{ subtodtal | number : "1.0-0" }} VND
+              </span>
+            </div>
+          </div>
+
+          <div class="flex-w flex-t bor12 p-b-13">
+            <div class="">
+              <span class="mtext-110 cl2">Vận chuyển: </span>
+            </div>
+
+            <div class="p-t-1" *ngIf="moneyship; else elseBlock">
+              <span class="mtext-110 cl2 ml-2">
+                {{ moneyship.data.total | number : "1.0-0" }} VND</span
+              >
+            </div>
+            <ng-template #elseBlock>
+              <div class="p-t-1">
+                <span class="mtext-110 cl2 ml-2"> 0 VND</span>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="flex-w flex-t p-t-27 p-b-33">
+            <div class="">
+              <span class="mtext-101 cl2"> Thanh toán: </span>
+            </div>
+
+            <div class="p-t-1" *ngIf="moneyship">
+              <span class="mtext-110 cl2 ml-2"
+                >{{
+                  moneyship.data.total + subtodtal | number : "1.0-0"
+                }}
+                VND</span
+              >
+            </div>
+            <div class="p-t-1" *ngIf="!moneyship">
+              <span class="mtext-110 cl2 ml-2"
+                >{{ subtodtal | number : "1.0-0" }} VND</span
+              >
+            </div>
+          </div>
+          <div class="div text-center">
+            <button type="submit" class="btn btn-primary">Đặt hàng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

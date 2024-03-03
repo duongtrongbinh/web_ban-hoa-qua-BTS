@@ -14,43 +14,29 @@ import { ProductService } from './services/product.service';
     headerShow:boolean = true;
     footerShow:boolean = true;
     allDevice=true;
+    quantity:number = 0;
     constructor(private auth: AuthencationService, private router: Router,private product:ProductService){}
     ngOnInit() {
-  
-      // Thực hiện các tác vụ khởi tạo ở đây (nếu có)
-      const myModal: HTMLElement | null= document.getElementById('myModal');
-      const myInput: HTMLElement | null = document.getElementById('myInput');
-
-      if (myModal !== null) {
-        // myModal không null ở đây, bạn có thể sử dụng nó an toàn
-        myModal.style.display = 'block';
-        myModal.addEventListener('shown.bs.modal', () => {
-          if (myInput !== null) {
-              myInput.focus();
-
-          }
-      });
+      // số lượng sản phẩm có trong giỏ hàng
+        const x = this.product.getItems();
+        if(x.length >0){
+            this.quantity = x.length;
+        }else{
+          this.quantity = 0;
+        }
       } 
-    }
+    
   
-    sumCart(){
-      const x = this.product.getItems();
-      return x.length;
-    }
+
     logout(){
       this.auth.logout(this.allDevice).subscribe((res)=>{
-        // console.log(res);
         localStorage.removeItem('user');
-
         const comf = confirm('Bạn đã đăng xuất thành công ');
         if(comf){
           this.router.navigate(['/']);
-
         }
-  
-        // Redirect
       }, (err) =>{
-        console.log(err)
+        console.log(err);
       })
     }
   

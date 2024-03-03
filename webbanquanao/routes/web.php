@@ -13,6 +13,8 @@ use App\Http\Controllers\CategoriesController;
 use App\Models\CategoriesModel;
 use App\Http\Controllers\CityApi;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\APi\vnpay\Pay;
+
 
 // use App\Http\Middleware\CheckUser;
 
@@ -82,5 +84,8 @@ Route::prefix('/dashboard')->group(function(){
     //     // Xử lý 404, có thể chuyển hướng hoặc hiển thị trang 404
     //     return redirect()->route('404');
     // })->where('any', '.*');
+
+    Route::get('/bill/return', [Pay::class, 'pay_return']);
+
     
 });

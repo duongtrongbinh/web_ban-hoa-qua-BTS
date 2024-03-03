@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { AddressService } from '../../services/address.service';
+import { BillService } from '../../services/bill.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,17 +11,23 @@ import { ProductService } from '../../services/product.service';
 export class CartComponent implements OnInit{
   url:string = 'http://127.0.0.1:8000';
   products:any[] = [];
+
  
 
-  constructor(private product:ProductService){
+  constructor(private product:ProductService,private address: AddressService,private thanhtoan: BillService){
 
-  }
+  } 
 
   
   ngOnInit(): void {
+    // this.provinceControl = new FormControl();
     this.products = this.product.getItems();
 
       console.log(this.products);
+
+  
+
+          
   }
   sumOneProduct(quantity:number,price:number){
     var sum = quantity * price;
@@ -33,4 +41,6 @@ export class CartComponent implements OnInit{
     localStorage.setItem('product', JSON.stringify(this.products));
 
   }
+  
+
 }

@@ -32,18 +32,29 @@ export class ProductService {
       price: product.price, 
       code_image: product.images[0].code_image, 
       quantity: 1,
-      name_image:product.images[0].name
+      name_image:product.images[0].name,
+      weight:parseInt(product.weight,10),
+      width:product.width,
+      height:parseInt(product.height,10),
+      length:parseInt(product.length,10)
     };
     var x = this.getItems();
-    const index = x.findIndex((item:any )=> item.id === product.id);
-    if(index>=0){
-      x[index].quantity += 1;
-      // Lưu mảng đã sửa vào localStorage
-      localStorage.setItem('product', JSON.stringify(x));
+      if(x){
+      const index = x.findIndex((item:any )=> item.id === product.id);
+      if(index>=0){
+        x[index].quantity += 1;
+        // Lưu mảng đã sửa vào localStorage
+        localStorage.setItem('product', JSON.stringify(x));
+      }else{
+        x.push(c); 
+        localStorage.setItem('product', JSON.stringify(x));
+      }
     }else{
-      x.push(c); 
-      localStorage.setItem('product', JSON.stringify(x));
+      this.items.push(c); 
+      localStorage.setItem('product', JSON.stringify(this.items));
     }
+    
+
   }
   getItems(){ 
     const storedItem = localStorage.getItem('product');
