@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 // use App\Imports\ProductExport;
 use App\Exports\ProductExport;
+use App\Conponents\deleteCTL;
+
 
 class ProductController extends Controller
 {
@@ -36,6 +38,7 @@ class ProductController extends Controller
         $this->storagetrait = new StorageTraits();
 
 
+
         $productStatus  = ProductStatus::getArrStatus();
         View::share('productStatus', $productStatus);
     }
@@ -45,17 +48,9 @@ class ProductController extends Controller
         $htmlSelect = $recusive->categoryRecusive($parentid);
         return $htmlSelect;
     }
-    // public function index()
-    // {
-    //     $count = 0;
-    //     $product =$this->product->get();
-    //     return view('dashboard.admin.products.list',compact('product','count'));
-    // }
+
     public function show()
     {
-        // if (auth()->user()->cannot('viewAny', $this->product)) {
-        //     return view('dashboard.layout.403');
-        // }
         return view('dashboard.admin.products.list');
     }
     public function index(Request $request)
@@ -88,9 +83,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // if (auth()->user()->cannot('create', $this->product)) {
-        //     return view('dashboard.layout.403');
-        // }
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.products.add',compact('htmlSelect'));
     }
@@ -100,9 +92,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // if (auth()->user()->cannot('create', $this->product)) {
-        //     return view('dashboard.layout.403');
-        // }
+
         try {
             DB::beginTransaction();
                 $createProduct = $request->except('_token','code');
@@ -137,9 +127,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        // if (auth()->user()->cannot('update', $this->product)) {
-        //     return view('dashboard.layout.403');
-        // }
+
         $product = $this->product->find($id);
         $imagePro = $this->imageProduct->where('product_id',$id)->get();
         $htmlSelect = $this->getCategory($product->category_id);
@@ -153,9 +141,7 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            // if (auth()->user()->cannot('update', $this->product)) {
-            //     return view('dashboard.layout.403');
-            // }
+
                 $product = $this->product->find($request->id);
                 $updateProduct = $request->except('_token','code');
                 $updateProduct['slug'] = Str::slug($request->name);
@@ -185,19 +171,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            $this->product->find($id)->delete();
-            return response()->json([
-                'code' => 200,
-                "message" => "success"
-            ], 200);
-        } catch (\Exception $exception) {
-            Log::error("message: " . $exception->getMessage());
-            return response()->json([
-                'code' => 500,
-                "message" => "false"
-            ], 500);
-        }
+        $de = new deleteCTL();
+        $de->dele($id);
     }
 
     public function fileExport() 

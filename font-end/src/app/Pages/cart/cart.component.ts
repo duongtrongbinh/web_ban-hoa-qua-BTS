@@ -9,7 +9,7 @@ import { BillService } from '../../services/bill.service';
 })
 
 export class CartComponent implements OnInit{
-  url:string = 'http://127.0.0.1:8000';
+  url:string = 'https://binhdt.id.vn/dashboard/webbanquanao/public';
   products:any[] = [];
 
  

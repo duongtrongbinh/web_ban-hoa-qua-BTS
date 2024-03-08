@@ -21,9 +21,6 @@ class BlogController extends Controller
      */
     public function show()
     {
-        if (auth()->user()->cannot('viewAny', $this->blog)) {
-            return view('dashboard.layout.403');
-        }
         $listBlog = $this->blog->get();
         return view('dashboard.admin.blogs.list',compact('listBlog'));
     }
@@ -50,9 +47,6 @@ class BlogController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->cannot('create', $this->blog)) {
-            return view('dashboard.layout.403');
-        }
         return view('dashboard.admin.blogs.add');
     }
 
@@ -61,9 +55,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        if (auth()->user()->cannot('create', $this->blog)) {
-            return view('dashboard.layout.403');
-        }
+   
         $imageBlog = $this->storageTraits->storageTraitUploadMuity($request->code, 'blog');
         $this->blog->create([
             'title'=>$request->title,
@@ -82,9 +74,7 @@ class BlogController extends Controller
      */
     public function edit(string $id)
     {
-        if (auth()->user()->cannot('update', $this->blog)) {
-            return view('dashboard.layout.403');
-        }
+ 
         $blog = $this->blog->find($id);
         return view('dashboard.admin.blogs.update',compact('blog'));
     }
@@ -94,9 +84,6 @@ class BlogController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (auth()->user()->cannot('update', $this->blog)) {
-            return view('dashboard.layout.403');
-        }
         $blog = $this->blog->find($id);
         $imm = $blog->name_image;
         if((!$request->code) || ($imm == $request->code)){

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +22,10 @@ import { RegisterComponent } from './Pages/account/register/register.component';
 import { LoginOderComponent } from './Pages/order/login-oder/login-oder.component';
 import { RegisterOderComponent } from './Pages/order/register-oder/register-oder.component';
 import { TrangchuComponent } from './Home/trangchu/trangchu.component';
+import { InformationComponent } from './Pages/account/information/information.component';
+import { OrdersComponent } from './Pages/account/orders/orders.component';
+import { OrderDetailComponent } from './Pages/account/order-detail/order-detail.component';
+import { ListbuttonComponent } from './Pages/account/listbutton/listbutton.component';
 
 
 @NgModule({
@@ -42,7 +46,11 @@ import { TrangchuComponent } from './Home/trangchu/trangchu.component';
     RegisterComponent,
     LoginOderComponent,
     RegisterOderComponent,
-    TrangchuComponent
+    TrangchuComponent,
+    InformationComponent,
+    OrdersComponent,
+    OrderDetailComponent,
+    ListbuttonComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +60,7 @@ import { TrangchuComponent } from './Home/trangchu/trangchu.component';
     CommonModule,
     ReactiveFormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [DatePipe],
+  bootstrap: [AppComponent,TrangchuComponent]
 })
 export class AppModule { }

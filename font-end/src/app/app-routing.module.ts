@@ -13,6 +13,7 @@ import { ProfileComponent } from './Pages/account/profile/profile.component';
 import { LoginComponent } from './Pages/account/login/login.component';
 import { RegisterComponent } from './Pages/account/register/register.component';
 import { TrangchuComponent } from './Home/trangchu/trangchu.component';
+import { OrdersComponent } from './Pages/account/orders/orders.component';
 
 const routes: Routes = [
   { path: '' , component: TrangchuComponent, title: 'Trang chu'},
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'shop/detail/:id' , component: DetailProductComponent, title: 'detail product'},
   { path: 'order/login' , component: LoginOderComponent, title: 'order-login'},
   { path: 'order/register' , component: RegisterOderComponent, title: 'order-register'},
+  { path: 'orders' , component: OrdersComponent, title: 'orders'},
   { path: 'account/profile' , component: ProfileComponent, title: 'profile'},
   { path: 'account/login' , component: LoginComponent, title: 'login'},
   { path: 'account/register' , component: RegisterComponent, title: 'register'},

@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// Route::middleware('web')
-// ->group(base_path('routes/permission.php'));
-// Route::getRoutes()->refreshNameLookups();
-// Route::getRoutes()->refreshActionLookups();
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SettingController;
@@ -13,6 +9,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Models\CategoriesModel;
 use App\Http\Controllers\CityApi;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\APi\vnpay\Pay;
 
 
@@ -28,11 +25,8 @@ use App\Http\Controllers\APi\vnpay\Pay;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Route::get('/get-geo-data', [CityApi::class, 'getGeoDataFromAPI']);
-    // Route::get('/login',[AuthController::class,'index'])->name('form_login');
-    // Route::post('/loginUser',[AuthController::class,'store'])->name('login');
-    // // >middleware('admin.login')
-Route::prefix('/dashboard')->group(function(){
+
+Route::prefix('/dashboard')->middleware(['auth'])->group(function(){
 
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
     // Route::get('/','UserController@list')->name('/dashboard');
@@ -79,13 +73,20 @@ Route::prefix('/dashboard')->group(function(){
         Route::put('update', [CategoriesController::class, 'update'])->name('update_categories');
         Route::get('delete/{id}', [CategoriesController::class, 'destroy'])->middleware('can:delete-category')->name('delete_categories');
     });
-    // Route::view('404', 'dashboard.layout.404')->name('404');
-    // Route::any('{any}', function () {
-    //     // Xử lý 404, có thể chuyển hướng hoặc hiển thị trang 404
-    //     return redirect()->route('404');
-    // })->where('any', '.*');
+    Route::prefix('/user')->group(function (){
+        Route::get('profile',[UserController::class, 'show'])->name('profileUser');
+        Route::put('update/{id}/profile', [UserController::class, 'update'])->name('update_profile');
 
-    Route::get('/bill/return', [Pay::class, 'pay_return']);
-
+        Route::get('',[UserController::class, 'index'])->name('list_user');
+        Route::get('add',[UserController::class,'create'])->name('form_add_user');
+        Route::post('add', [UserController::class, 'store'])->name('add_user');
+        Route::get('edit/{id}', [UserController::class, 'edit'])->name('edit_user');
+        Route::put('update/{id}', [UserController::class, 'updateRole'])->name('update_user');
+        Route::get('delete/{id}', [UserController::class, 'destroy'])->name('delete_user');
+    });
+    Route::prefix('/order')->group(function (){
+    Route::get('/list', [OrderController::class, 'index'])->name('list_order');
+    Route::get('/detail/{id}', [OrderController::class, 'show'])->name('detail_order');
+    });
     
 });

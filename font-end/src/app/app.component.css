@@ -1,0 +1,17 @@
+/* Trong file CSS hoặc style tag trong Angular component */
+.cart-container {
+    transition: all 0.3s ease;
+  }
+  
+  .cart-hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .cart-visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  

@@ -36,21 +36,4 @@ class ProductController extends Controller
     }
 
 
-    public function addCart(string $id,$quantity){
-        $product = ProductModel::with('images')->find($id);
-        $cart = array();
-        if(isset($cart['id'])){
-            $cart[$id]['quantity'] += $quantity;
-        }else{
-            $cart[$id] = [
-                'name'=>$product->name,
-                'price'=>$product->price,
-                'quantity'=>1,
-                'code_image'=>$product->images
-            ];
-        }
-        session()->put('cart', $cart);
-        $xx = session()->get('cart');
-        return response()->json($xx);
-    }
 }

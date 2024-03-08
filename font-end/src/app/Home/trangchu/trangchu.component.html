@@ -1,181 +1,25 @@
-<!-- Slider -->
-<!-- <section class="section-slide">
-  <div class="wrap-slick1 rs1-slick1">
-    <div class="slick1">
-      <div
-        class="item-slick1"
-        style="background-image: url(assets/images/slide-03.jpg)"
-      >
-        <div class="container h-full">
-          <div class="flex-col-l-m h-full p-t-100 p-b-30">
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="fadeInDown"
-              data-delay="0"
-            >
-              <span class="ltext-202 cl2 respon2"> Men Collection 2018 </span>
-            </div>
-
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="fadeInUp"
-              data-delay="800"
-            >
-              <h2 class="ltext-104 cl2 p-t-19 p-b-43 respon1">New arrivals</h2>
-            </div>
-
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="zoomIn"
-              data-delay="1600"
-            >
-              <a
-                href="product.html"
-                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
-              >
-                Shop Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="item-slick1"
-        style="background-image: url(assets/images/slide-02.jpg)"
-      >
-        <div class="container h-full">
-          <div class="flex-col-l-m h-full p-t-100 p-b-30">
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="rollIn"
-              data-delay="0"
-            >
-              <span class="ltext-202 cl2 respon2"> Men New-Season </span>
-            </div>
-
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="lightSpeedIn"
-              data-delay="800"
-            >
-              <h2 class="ltext-104 cl2 p-t-19 p-b-43 respon1">
-                Jackets & Coats
-              </h2>
-            </div>
-
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="slideInUp"
-              data-delay="1600"
-            >
-              <a
-                href="product.html"
-                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
-              >
-                Shop Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="item-slick1"
-        style="background-image: url(assets/images/slide-04.jpg)"
-      >
-        <div class="container h-full">
-          <div class="flex-col-l-m h-full p-t-100 p-b-30">
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="rotateInDownLeft"
-              data-delay="0"
-            >
-              <span class="ltext-202 cl2 respon2"> Women Collection 2018 </span>
-            </div>
-
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="rotateInUpRight"
-              data-delay="800"
-            >
-              <h2 class="ltext-104 cl2 p-t-19 p-b-43 respon1">NEW SEASON</h2>
-            </div>
-
-            <div
-              class="layer-slick1 animated visible-false"
-              data-appear="rotateIn"
-              data-delay="1600"
-            >
-              <a
-                href="product.html"
-                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
-              >
-                Shop Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- Full screen modal -->
-
 <div
-  id="carouselExampleDark"
-  class="carousel carousel-dark slide"
+  id="carouselExampleControls"
+  class="carousel slide"
   data-bs-ride="carousel"
 >
-  <div class="carousel-indicators">
-    <button
-      type="button"
-      data-bs-target="#carouselExampleDark"
-      data-bs-slide-to="0"
-      class="active"
-      aria-current="true"
-      aria-label="Slide 1"
-    ></button>
-    <button
-      type="button"
-      data-bs-target="#carouselExampleDark"
-      data-bs-slide-to="1"
-      aria-label="Slide 2"
-    ></button>
-    <button
-      type="button"
-      data-bs-target="#carouselExampleDark"
-      data-bs-slide-to="2"
-      aria-label="Slide 3"
-    ></button>
-  </div>
   <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <img src="assets/images/slide-03.jpg" class="d-block w-100" alt="..." />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item" data-bs-interval="2000">
-      <img src="assets/images/slide-03" class="d-block w-100" alt="..." />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="assets/images/slide-04" class="d-block w-100" alt="..." />
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
+    <div
+      *ngFor="let image of images; let i = index"
+      class="carousel-item"
+      [class.active]="i === 0"
+    >
+      <img
+        [src]="url + image.code_image"
+        class="d-block w-100"
+        [alt]="image.name_image"
+      />
     </div>
   </div>
   <button
     class="carousel-control-prev"
     type="button"
-    data-bs-target="#carouselExampleDark"
+    data-bs-target="#carouselExampleControls"
     data-bs-slide="prev"
   >
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -184,7 +28,7 @@
   <button
     class="carousel-control-next"
     type="button"
-    data-bs-target="#carouselExampleDark"
+    data-bs-target="#carouselExampleControls"
     data-bs-slide="next"
   >
     <span class="carousel-control-next-icon" aria-hidden="true"></span>

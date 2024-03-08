@@ -3,25 +3,24 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HeaderTokenService } from './header-token.service';
 import { Icart } from '../interface/icart';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://127.0.0.1:8000/api/products';
-  private apiUrlShow = 'http://127.0.0.1:8000/api/product/';
-  private apiUrlCart = 'http://127.0.0.1:8000/api/product/addToCart/';
+  private apiUrl =this.urlConfig.url + '/api/products';
+  private apiUrlShow =this.urlConfig.url + '/api/product/';
+  private apiUrlCart = this.urlConfig.url + '/api/product/addToCart/';
 
-  constructor(private http: HttpClient,  private headerToken: HeaderTokenService) { }
+  constructor(private http: HttpClient,  private urlConfig: ConfigService) { }
   items: Icart[] = [];
 
   getProduct(): Observable<any> {
-    let headers = this.headerToken.headerToken();
-    return this.http.get(this.apiUrl, {headers:headers});
+    return this.http.get(this.apiUrl);
   }
   getOneProduct(id:string): Observable<any>{
-    let headers = this.headerToken.headerToken();
-    return this.http.get(this.apiUrlShow + id,{headers:headers});
+    return this.http.get(this.apiUrlShow + id);
   }
 
   cartProduct(product:any){
@@ -59,5 +58,10 @@ export class ProductService {
   getItems(){ 
     const storedItem = localStorage.getItem('product');
     return storedItem ? JSON.parse(storedItem) : null;
+  }
+  getUser(){
+    const storedItem = localStorage.getItem('user');
+    const user = storedItem ? JSON.parse(storedItem) : null;
+    return user.id;
   }
 }

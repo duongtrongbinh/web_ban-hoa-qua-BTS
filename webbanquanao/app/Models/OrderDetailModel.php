@@ -13,4 +13,13 @@ class OrderDetailModel extends Model
     use SoftDeletes;
     public $table = 'order_detail';
     protected  $guarded = [];
+    public function order()
+    {
+        return $this->belongsTo(OrderModel::class, 'order_id', 'id');
+    }
+    public function product()
+    {
+        return $this->belongsTo(ProductModel::class, 'product_id', 'id');
+    }
+
 }

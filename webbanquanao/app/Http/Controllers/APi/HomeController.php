@@ -5,6 +5,7 @@ namespace App\Http\Controllers\APi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoriesModel;
+use App\Models\SlideModel;
 use App\Conponents\Recusives;
 
 class HomeController extends Controller
@@ -22,7 +23,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $list = CategoriesModel::all();
+        $list = SlideModel::all();
         return response()->json($list);
     }
 

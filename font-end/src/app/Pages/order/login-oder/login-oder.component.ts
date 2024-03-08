@@ -11,7 +11,7 @@ import { Order } from '../../../interface/order';
   styleUrl: './login-oder.component.css'
 })
 export class LoginOderComponent implements OnInit{
-  url:string = 'http://127.0.0.1:8000';
+  url:string = 'http:127.1.1.0.8';
   products:any[] = [];
   Province:any = 0;
   District:any = 0;
@@ -37,9 +37,8 @@ export class LoginOderComponent implements OnInit{
   constructor(private product:ProductService,private address: AddressService,private thanhtoan: BillService){}
   ngOnInit(): void {
     this.products = this.product.getItems();
-    const storedItem = localStorage.getItem('user');
-    const user = storedItem ? JSON.parse(storedItem) : null;
-    this.user_id = user.id;
+
+    this.user_id = this.product.getUser();
     
     let subtotal = this.products.reduce((accumulator, currentItem) => {
       accumulator.quantityPrice += currentItem.quantity * currentItem.price;

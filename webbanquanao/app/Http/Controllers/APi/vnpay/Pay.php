@@ -10,9 +10,19 @@ use DB;
 use Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use App\Enums\StatusBill;
+
+
 
 class Pay extends Controller
 {
+    private $url;
+    private $statusB;
+    public function construct(){
+        $this->url = env("url_font");
+        $this->statusB  = StatusBill::values();
+
+    }
 
     public function medium1(Request $request){
         $data = $request->post();
@@ -20,27 +30,62 @@ class Pay extends Controller
             $order_code = $this->apiOrderGhn($request->post());
             $xx = $this->saveDb($request->post(),$order_code);
             if($xx == true){
-                $url = $this->billVNpay($request->post(),$request);
+                if($this->updateQuantityOrder($order_code,$signal = 1)){
+
+                $url = $this->billVNpay($request->post(),$request,$order_code);
                 return response()->json($url, 200);
             }
             return response()->json(false, 200);
+        }
      
             
         }else{
             $order_code = $this->apiOrderGhn($request->post());
             $xx = $this->saveDb($request->post(),$order_code);
             if($xx == true){
-                $url ="http://localhost:4200";
-                return response()->json($url, 200); 
+                if($this->updateQuantityOrder($order_code,$signal = 1)){
+                    return response()->json($this->url, 200);
+                }
+ 
             }
             return response()->json(false, 200);
    
         }
 
     }
+
+
     public function pay_return(Request $request){
-      
-        return redirect()->away('http://localhost:4200');
+        $dd = $request->input('vnp_ResponseCode');
+        $code = $request->input('vnp_OrderInfo');
+        if($dd == "00" ){
+                return redirect()->away($this->url);
+            
+        }else{
+            $re = $this->updateQuantityOrder($code,$signal = "huy");
+            if($re){
+                $headers = [
+                    'Content-Type'=>'application/json',
+                    'ShopId'=>"4734816",
+                    'token'=>'d4d4cd6f-8f70-11ee-96dc-de6f804954c9'
+                ];
+                $data = [
+                    "order_codes"=>["$code"]
+                ];
+                
+                $response = Http::withHeaders($headers)->post("https://online-gateway.ghn.vn/shiip/public-api/v2/switch-status/cancel", $data);
+                if ($response->successful()) {
+                    // Xử lý phản hồi khi request thành công
+                    $responseData = $response->json();
+                    return redirect()->away($this->url);
+    
+                } else {
+                    // Xử lý phản hồi khi request không thành công
+                return redirect()->away($this->url);
+                }
+            }
+
+        }
     }
 
 
@@ -80,7 +125,7 @@ class Pay extends Controller
 
     }
 
-    public function billVNpay($data,$data1){
+    public function billVNpay($data,$data1,$order_code){
         $vnp_TxnRef = rand(1,10000); //Mã giao dịch thanh toán tham chiếu của merchant
         $vnp_Amount = $data['data1']['moneyship'] + $data['data']['insurance_value']; // Số tiền thanh toán
         $vnp_Locale = 'vn'; //Ngôn ngữ chuyển hướng thanh toán
@@ -98,7 +143,7 @@ class Pay extends Controller
             "vnp_CurrCode" => "VND",
             "vnp_IpAddr" => $vnp_IpAddr,
             "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" =>$vnp_TxnRef,
+            "vnp_OrderInfo" =>$order_code,
             "vnp_OrderType" => "other",
             "vnp_ReturnUrl" =>env('APP_URL') . env('vnp_Returnurl'),
             "vnp_TxnRef" => $vnp_TxnRef,
@@ -191,5 +236,116 @@ class Pay extends Controller
             return $errorCode;
         }
     }
+
+    public function ShowOrder(Request $request){
+        $data = OrderModel::where('user_id', $request->user_id)->with('order_detail.product.images')->get();
+        foreach( $data as $key){
+            $this->StatusBill($key['code']);
+        }
+        return response()->json($data, 200);
+    }
+
+    public function updateQuantityOrder($code,$signal){
+        $orderId = (OrderModel::where("code",$code)->first())->id;
+        $orderDetails = OrderDetailModel::where('order_id', $orderId)->get();
+
+    if ($orderDetails->isEmpty()) {
+        return false;
+    }
+    if($signal == 'huy'){
+                // Duyệt qua từng chi tiết đơn hàng để cập nhật kho
+        foreach ($orderDetails as $orderDetail) {
+            $newQuantity = $orderDetail->product->quantity + $orderDetail->quantity;
+            $orderDetail->product->update(['quantity' => $newQuantity]);
+        }
+
+        // Xóa các chi tiết đơn hàng và đánh dấu đơn hàng là đã hủy
+        OrderDetailModel::where('order_id', $orderId)->delete();
+        OrderModel::where('id', $orderId)->delete();
+        return true;
+
+    }else{
+            // Duyệt qua từng chi tiết đơn hàng để cập nhật kho
+            foreach ($orderDetails as $orderDetail) {
+                $updateQuantity = $orderDetail->product->quantity - $orderDetail->quantity;
+                $orderDetail->product->update(['quantity' => $updateQuantity]);
+            }
+            return true;
+    }
+
+    }
+
+
+
+    public function getBill(){
+        $data = OrderModel::get();
+        foreach( $data as $key){
+            $this->StatusBill($key->code);
+        }
+        return true;
+    }
+
+
+    public function StatusBill($code){
+        $headers = [
+            'Content-Type'=>'application/json',
+            'token'=>'d4d4cd6f-8f70-11ee-96dc-de6f804954c9'
+        ];
+        $data = [
+            "order_code"=>$code
+        ];
+        
+        $response = Http::withHeaders($headers)->post("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail", $data);
+        
+        if ($response->successful()) {
+            // Xử lý phản hồi khi request thành công
+            $responseData = $response->json();
+
+            // Lấy giá trị cuối cùng từ mảng log
+            $lastLog = end($responseData['data']['log']);
+            $status = $lastLog['status'];
+            switch ($status) {
+                case 'picking':
+                case 'ready_to_pick':
+                case 'money_collect_picking':
+                    OrderModel::where('code', $code)->update(['status' => 0]);
+                    break;
+                case 'picked':
+                    OrderModel::where('code', $code)->update(['status' => 1]);
+                    break;
+                case 'transporting':
+                case 'sorting':
+                    OrderModel::where('code', $code)->update(['status' => 2]);
+                    break;
+                case 'delivering':
+                case 'money_collect_delivering':
+                    OrderModel::where('code', $code)->update(['status' => 3]);
+                    break;
+                case 'delivered':
+                    OrderModel::where('code', $code)->update(['status' => 4]);
+                    break;
+                case 'delivery_fail':
+                    OrderModel::where('code', $code)->update(['status' => 5]);
+                    break;
+                case 'waiting_to_return':
+                    OrderModel::where('code', $code)->update(['status' => 6]);
+                    break;
+                case 'cancel':
+                    OrderModel::where('code', $code)->update(['status' => 7]);
+                    break;
+                // Thêm các trường hợp khác nếu cần
+                default:
+                    // Trạng thái không khớp với bất kỳ trạng thái nào đã đề cập
+                    OrderModel::where('code', $code)->update(['status' => 7]);
+                    break;
+            }
+            return true;
+
+        } else {
+            // Xử lý phản hồi khi request không thành công
+            return "lôi";
+        }
+    }
+
 }
 

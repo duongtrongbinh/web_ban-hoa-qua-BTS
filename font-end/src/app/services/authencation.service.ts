@@ -3,17 +3,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HeaderTokenService } from './header-token.service';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthencationService {
 
-  constructor(private http: HttpClient, private router: Router, private headerToken: HeaderTokenService) { }
-  urlLogin:string="http://127.0.0.1:8000/api/login";
-  urlUser:string="http://127.0.0.1:8000/api/user";
-  urlLogout:string="http://127.0.0.1:8000/api/logout";
-  urlRegister:string="http://127.0.0.1:8000/api/register";
+  constructor(private http: HttpClient, private router: Router, private headerToken: HeaderTokenService, private urlConfig: ConfigService) { }
+  urlLogin:string=this.urlConfig.url + "/api/login";
+  urlUser:string= this.urlConfig.url +"/api/user";
+  urlLogout:string= this.urlConfig.url +"/api/logout";
+  urlRegister:string= this.urlConfig.url +"/api/register";
 
 
   Login(password:string, email:string): Observable<any>{

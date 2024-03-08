@@ -27,22 +27,24 @@ use App\Models\User;
 
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return auth()->user();
-});
+// Route::get('users', function() {
+//     return User::all();
+// });
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return auth()->user();
+// });
+
 Route::middleware('auth:api')->group(function () {
     // product, blog, comment product, comment blog, account, profile account, seeting, slide, cart, pay
-    Route::get('/products', [ProductController::class, 'index']);
-    Route::get('/product/{id}', [ProductController::class, 'show']);
-    Route::get('/product/addToCart/{id}/{quantity}', [ProductController::class, 'addCart']);
     Route::post('/bill', [Pay::class, 'medium1']);
-
-
+    Route::post('/orders', [Pay::class, 'ShowOrder']);
 });
 
-Route::get('users', function() {
-    return User::all();
-});
+Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/slides', [HomeController::class, 'index']);
+Route::get('/orders', [Pay::class, 'ShowOrder']);
+
 
 Route::group(['namespace'=>'APi'], function(){
     Route::post('/login', [UserController::class, 'login']);

@@ -1,0 +1,11 @@
+<div class="list-group">
+  <a
+    *ngFor="let item of items; let i = index"
+    [routerLink]="item.href"
+    class="list-group-item list-group-item-action"
+    [class.active]="i === activeIndex"
+    (click)="setActiveIndex(i)"
+  >
+    {{ item.label }}
+  </a>
+</div>

@@ -88,6 +88,21 @@
         </ul>
       </li><!-- End product Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#order-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>Quản lý đơn hàng</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="order-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('list_order')}}">
+              <i class="bi bi-circle"></i><span>Đơn hàng</span>
+            </a>
+          </li>
+
+
+        </ul>
+      </li><!-- End order Nav -->
+
       <li class="nav-heading">Configuration</li>
 
       <li class="nav-item">

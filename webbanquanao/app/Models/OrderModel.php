@@ -13,4 +13,8 @@ class OrderModel extends Model
     use SoftDeletes;
     public $table = 'order';
     protected  $guarded = [];
+    public function order_detail()
+    {
+        return $this->hasMany(OrderDetailModel::class, 'order_id', 'id');
+    }
 }

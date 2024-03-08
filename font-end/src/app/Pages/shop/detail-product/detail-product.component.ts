@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { Icart } from '../../../interface/icart';
@@ -25,11 +25,14 @@ export class DetailProductComponent implements OnInit{
 
     }); 
   }
-
+  x:number = 0;
+  @Output() sendData = new EventEmitter<number>();
   addToCart(product: Icart){
 
       this.pro.cartProduct(product);
       // console.log(this.pro.getItems());
+      this.x = this.product.getItems().length;
+      this.sendData.emit(this.x);
 
   }
 }
