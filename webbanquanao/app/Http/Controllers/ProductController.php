@@ -7,6 +7,7 @@ use App\Models\ImageProduct;
 use App\Models\CategoriesModel;
 use App\Conponents\Recusives;
 use Illuminate\Support\Str;
+use App\Http\Requests\ProductValidation;
 use Illuminate\Http\Request;
 use App\Enums\ProductStatus;
 use App\Traits\StorageTraits;
@@ -90,7 +91,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductValidation $request)
     {
 
         try {
@@ -137,7 +138,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(ProductValidation $request)
     {
         try {
             DB::beginTransaction();

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { Icart } from '../../../interface/icart';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -10,10 +11,10 @@ import { Icart } from '../../../interface/icart';
 })
 export class DetailProductComponent implements OnInit{
   product:any;
-  url:string = 'http://127.0.0.1:8000';
+  url:string = this.urlConfig.url;
   items: Icart[] = [];
 
-  constructor(private route: ActivatedRoute, private pro: ProductService){}
+  constructor(private route: ActivatedRoute, private pro: ProductService,private urlConfig: ConfigService){}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];

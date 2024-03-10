@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-product',
@@ -8,8 +9,8 @@ import { ProductService } from '../../../services/product.service';
 })
 export class ProductComponent implements OnInit{
   products:any;
-  url:string = 'http://127.0.0.1:8000';
-  constructor(private pro: ProductService){}
+  url:string = this.urlConfig.url;
+  constructor(private pro: ProductService,private urlConfig: ConfigService){}
   ngOnInit(): void {
       this.pro.getProduct().subscribe(data=>{
         console.log(data);

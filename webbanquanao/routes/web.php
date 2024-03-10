@@ -26,7 +26,7 @@ use App\Http\Controllers\APi\vnpay\Pay;
 |
 */
 
-Route::prefix('/dashboard')->middleware(['auth'])->group(function(){
+Route::prefix('/dashboard')->middleware(['auth','check.admin'])->group(function(){
 
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
     // Route::get('/','UserController@list')->name('/dashboard');

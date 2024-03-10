@@ -31,7 +31,18 @@ class OrderController extends Controller
     public function show(string $id){
         $oneOrder = OrderModel::with('order_detail.product.images')->find($id);
         $statusO = StatusBill::values();
-        return view('dashboard.admin.bills.detail',compact(['oneOrder',"statusO"]));
+        // $this->pay->StatusOrderB($oneOrder->code);
+        if($oneOrder->status == 7){
+            $result = [
+                StatusBill::status1,
+                StatusBill::status7
+            ];
+        }else if($oneOrder->status == 0){
+            $result = [StatusBill::status1];
+        }else{
+            $result = array_slice($statusO, 0, $oneOrder->status);
+        }
+        return view('dashboard.admin.bills.detail',compact(['oneOrder',"result","statusO"]));
 
     }
 

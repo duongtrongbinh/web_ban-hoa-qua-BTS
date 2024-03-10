@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { BillService } from '../../../services/bill.service';
 import { DatePipe } from '@angular/common';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,9 +18,9 @@ export class ProfileComponent implements OnInit{
   orders:any;
   total:any;
   detail:any;
-  url:string = "http://127.0.0.1:8000";
+  url:string = this.urlConfig.url;
 
-  constructor(private datePipe: DatePipe,private bill: BillService,private auth: AuthencationService, private router: Router,private product:ProductService){}
+  constructor(private datePipe: DatePipe,private bill: BillService,private auth: AuthencationService, private router: Router,private product:ProductService,private urlConfig: ConfigService){}
   ngOnInit(): void {
     this.user_id = this.product.getUser();
     // console.log(this.user_id);

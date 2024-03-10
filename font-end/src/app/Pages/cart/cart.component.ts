@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { AddressService } from '../../services/address.service';
 import { BillService } from '../../services/bill.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,12 +10,12 @@ import { BillService } from '../../services/bill.service';
 })
 
 export class CartComponent implements OnInit{
-  url:string = 'https://binhdt.id.vn/dashboard/webbanquanao/public';
+  url:string = this.urlConfig.urlFont;
   products:any[] = [];
 
  
 
-  constructor(private product:ProductService,private address: AddressService,private thanhtoan: BillService){
+  constructor(private product:ProductService,private address: AddressService,private thanhtoan: BillService,private urlConfig: ConfigService){
 
   } 
 

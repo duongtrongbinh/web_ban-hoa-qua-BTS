@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 
 class CheckUser
 {
@@ -17,9 +17,14 @@ class CheckUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->check()){
-            return redirect()->to('/dashboard');
+        $user = auth()->user();
+        if ($user->hasRole('guest')) {
+            return response()->json([
+                "error"=>"Tài khoản này không có quyền truy cập vào hệ thống quản trị."
+            ],403);
         }
-        return redirect()->to('form_login');
+        return $next($request);
+
+
     }
 }

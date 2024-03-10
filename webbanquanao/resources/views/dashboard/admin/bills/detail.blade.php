@@ -108,9 +108,6 @@
                             Vận chuyển
                             </h3>
 
-                        @php
-                            $result = array_slice($statusO, 0, $oneOrder->status);
-                        @endphp
                         <div class="d-flex">
                             @foreach ($result as $item)
                                 <h5>{{ $item }}</h5>

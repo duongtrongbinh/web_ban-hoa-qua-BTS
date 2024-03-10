@@ -4,6 +4,7 @@ import { AddressService } from '../../../services/address.service';
 import { BillService } from '../../../services/bill.service';
 import { NgForm } from '@angular/forms';
 import { Order } from '../../../interface/order';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-login-oder',
@@ -11,7 +12,7 @@ import { Order } from '../../../interface/order';
   styleUrl: './login-oder.component.css'
 })
 export class LoginOderComponent implements OnInit{
-  url:string = 'http:127.1.1.0.8';
+  url:string = this.urlConfig.url;
   products:any[] = [];
   Province:any = 0;
   District:any = 0;
@@ -34,7 +35,7 @@ export class LoginOderComponent implements OnInit{
   provinceErr:string ='';
   districtErr:string ='';
   user_id:number =0;
-  constructor(private product:ProductService,private address: AddressService,private thanhtoan: BillService){}
+  constructor(private product:ProductService,private address: AddressService,private thanhtoan: BillService,private urlConfig: ConfigService){}
   ngOnInit(): void {
     this.products = this.product.getItems();
 

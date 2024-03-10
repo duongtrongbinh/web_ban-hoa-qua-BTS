@@ -68,5 +68,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add-slide', [SlidePolicy::class , 'create']);
         Gate::define('edit-slide', [SlidePolicy::class , 'update']);
         Gate::define('delete-slide', [SlidePolicy::class , 'delete']);
+
     }
 }

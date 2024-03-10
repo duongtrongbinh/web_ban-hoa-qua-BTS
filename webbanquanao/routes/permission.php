@@ -13,7 +13,7 @@ Route::get('/',[AuthController::class,'index'])->name('form_login');
 Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 Route::post('/loginUser',[AuthController::class,'store'])->name('login');
 
-Route::prefix('/per')->middleware('auth')->group(function(){
+Route::prefix('/per')->middleware(['auth',"check.admin"])->group(function(){
 
     Route::prefix('role')->group(function() {
         Route::get('addPer',[RoleController::class,'createPer'])->name('form_add_permiison');

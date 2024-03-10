@@ -279,14 +279,11 @@ class Pay extends Controller
 
     public function getBill(){
         $data = OrderModel::get();
-        foreach( $data as $key){
-            $this->StatusBill($key->code);
-        }
         return true;
     }
 
 
-    public function StatusBill($code){
+    public function StatusOrderB($code){
         $headers = [
             'Content-Type'=>'application/json',
             'token'=>'d4d4cd6f-8f70-11ee-96dc-de6f804954c9'
@@ -298,10 +295,7 @@ class Pay extends Controller
         $response = Http::withHeaders($headers)->post("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail", $data);
         
         if ($response->successful()) {
-            // Xử lý phản hồi khi request thành công
             $responseData = $response->json();
-
-            // Lấy giá trị cuối cùng từ mảng log
             $lastLog = end($responseData['data']['log']);
             $status = $lastLog['status'];
             switch ($status) {
@@ -333,16 +327,13 @@ class Pay extends Controller
                 case 'cancel':
                     OrderModel::where('code', $code)->update(['status' => 7]);
                     break;
-                // Thêm các trường hợp khác nếu cần
                 default:
-                    // Trạng thái không khớp với bất kỳ trạng thái nào đã đề cập
                     OrderModel::where('code', $code)->update(['status' => 7]);
                     break;
             }
             return true;
 
         } else {
-            // Xử lý phản hồi khi request không thành công
             return "lôi";
         }
     }

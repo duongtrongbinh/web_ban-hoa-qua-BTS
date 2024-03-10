@@ -41,6 +41,9 @@
             <div class="form-group col-4">
                 <label for="" class="form-lable mb-2">Name</label>
                 <input type="text" name="name" class="form-control" placeholder="Nhập name ..." >
+                @if($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                @endif
             </div>
 
             <div class="form-group col-4">
