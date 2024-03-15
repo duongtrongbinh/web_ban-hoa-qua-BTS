@@ -10,7 +10,6 @@ import { HomeService } from '../../services/home.service';
 export class TrangchuComponent implements OnInit {
   category:any;
   images: any[] = [];
-  url:string = "http://127.0.0.1:8000";
   constructor(private home: HomeService){}
   ngOnInit(): void {
       // this.home.getListBlog().subscribe(re => {

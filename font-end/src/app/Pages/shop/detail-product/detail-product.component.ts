@@ -11,10 +11,9 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class DetailProductComponent implements OnInit{
   product:any;
-  url:string = this.urlConfig.url;
   items: Icart[] = [];
 
-  constructor(private route: ActivatedRoute, private pro: ProductService,private urlConfig: ConfigService){}
+  constructor(private route: ActivatedRoute, private pro: ProductService){}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];

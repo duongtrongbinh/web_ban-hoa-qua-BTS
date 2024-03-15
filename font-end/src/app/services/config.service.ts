@@ -6,6 +6,6 @@ import { Injectable } from '@angular/core';
 export class ConfigService {
 
   constructor() { }
-  url:string = "https://dashboard.binhdt.id.vn/public";
-  urlFont:string = "https://binhdt.id.vn";
+  url:string = "http://127.0.0.1:8000";
+  urlFont:string = "http://localhost:4200/";
 }

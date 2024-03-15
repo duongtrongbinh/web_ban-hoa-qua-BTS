@@ -28,15 +28,15 @@
             <div class="slick3 gallery-lb">
               <div
                 *ngFor="let image of product.images"
-                [attr.data-thumb]="url + image.code_image"
+                [attr.data-thumb]="image.code_image"
                 class="item-slick3"
               >
                 <div class="wrap-pic-w pos-relative">
-                  <img [src]="url + image.code_image" alt="IMG-PRODUCT" />
+                  <img [src]="image.code_image" alt="IMG-PRODUCT" />
 
                   <a
                     class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                    [href]="url + image.code_image"
+                    [href]="image.code_image"
                   >
                     <i class="fa fa-expand"></i>
                   </a>

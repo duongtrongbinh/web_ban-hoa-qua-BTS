@@ -28,58 +28,20 @@
         <div class="col-6">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control mt-2" placeholder="Vui lòng nhập họ và tên của bạn.">
-                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
+                <input type="text" name="name" class="form-control mt-2" placeholder="Vui lòng nhập họ và tên của bạn." value="{{ old('name')}}">
+                @if($errors->has('name'))
+                <small id="helpId" class="text-danger">{{ $errors->first('name') }}</small>
+                @endif
               </div>
               <div class="form-group mt-3">
                   <label>Email</label>
-                  <input type="email" name="email" class="form-control mt-2" placeholder="Vui lòng nhập email của bạn.">
-                  {{-- <small id="helpId" class="text-muted">Help text</small> --}}
-              </div>
-        </div>
-        <div class="col-6 ">
-            <div class="form-group">
-                <label>Address</label>
-                <input type="text" name="address" class="form-control mt-2" placeholder="Vui lòng nhập địa chỉ của bạn.">
-                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
-              </div>
-              <div class="form-group mt-3">
-                  <label>Birthday</label>
-                  <input type="date" name="birthday" class="form-control mt-2">
-                  {{-- <small id="helpId" class="text-muted">Help text</small> --}}
-              </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group mt-3">
-                <label>Giới thiệu bản thân</label>
-                <textarea type="text" name="desc" class="form-control mt-2" placeholder="Vui lòng giới thiệu bản thân bạn."></textarea>
-                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
+                  <input type="text" name="email" class="form-control mt-2" placeholder="Vui lòng nhập email của bạn." value="{{ old('email')}}">
+                  @if($errors->has('email'))
+                  <small id="helpId" class="text-danger">{{ $errors->first('email') }}</small>
+                  @endif
               </div>
         </div>
         <div class="col-6">
-            <div class="form-group mt-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control mt-2" placeholder="Vui lòng nhập mật khẩu của bạn.">
-                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
-              </div>
-
-        </div>
-        <div class="col-6">
-            <div class="form-group mt-3">
-                <label>Nhập ảnh đại diện</label>
-                <input type="file" name="image_avatar" class="form-control mt-2">
-                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group mt-3">
-                <label>Phone</label>
-                <input type="text" name="phone" class="form-control mt-2" placeholder="Vui lòng nhập số điện thoại bạn.">
-                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-
             <div class="form-group">
                 <label>Vai trò</label>
                 <select name="role[]" multiple class="form-control mt-2 select2_per">
@@ -88,8 +50,27 @@
                     <option value="{{ $item->id}}">{{ $item->name}}</option>
                     @endforeach
                 </select>
+                @if($errors->has('role'))
+                <small id="helpId" class="text-danger">{{ $errors->first('role') }}</small>
+                @endif
+            </div>
+            <div class="form-group mt-3">
+                <label>Phone</label>
+                <input type="text" name="phone" class="form-control mt-2" placeholder="Vui lòng nhập số điện thoại bạn." value="{{ old('phone')}}">
+                @if($errors->has('phone'))
+                <small id="helpId" class="text-danger">{{ $errors->first('phone') }}</small>
+                @endif
             </div>
         </div>
+        
+        <div class="form-group">
+            <input type="hidden" name="filepath" class="form-control mt-2" value="abc.jpg">
+            <input type="hidden" name="address" class="form-control mt-2" value="số 1 ngõ a ... ">
+            <input type="hidden" name="birthday" class="form-control mt-2" value="2003-12-25">
+            <input type="hidden" name="desc" class="form-control mt-2" value="xin chào.">
+            <input type="hidden" name="password" class="form-control mt-2" value="123456789">
+            <input type="hidden" name="ag" value="d">
+          </div>
         <div class="col-12 text-center mt-3">
             <button type="submit" class="btn btn-primary">Add User</button>
         </div>

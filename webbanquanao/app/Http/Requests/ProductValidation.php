@@ -23,17 +23,16 @@ class ProductValidation extends FormRequest
     {
         return [
             "name"=> "required|min:2",
-            "slug"=>"required|min:2",
-            "code"=> "required|unique",
-            "weight"=> "required|numeric|min:1:max:2000",
-            "height"=> "required|numeric|min:1:max:2000",
+            "weight"=> "required|numeric|min:0|max:3000",
+            "height"=> "required|numeric|min:0|max:3000",
             "content"=>"required",
-            "length"=> "required|numeric|min:1:max:2000",
+            "length"=> "required|numeric|min:0|max:3000",
             "quantity"=> "required|numeric|min:1|max:1000000",
             "price"=> "required|numeric|min:10000|max:1000000",
-            "status"=>"required|numeric",
-            "width"=> "required|numeric|min:1:max:2000",
-            "category_id"=>"required"
+            "status"=>"required",
+            "width"=> "required|numeric|min:0|max:3000",
+            "category_id"=>"required",
+            "filepath"=>"required"
         ];
     }
 }

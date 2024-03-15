@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CategoriesModel;
 use App\Conponents\Recusives;
+use App\Http\Requests\CategoryValidation;
 use Illuminate\Support\Str;
 
 
@@ -45,7 +46,7 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryValidation $request)
     {
         $this->category->create([
             'name'=> $request->name,
@@ -76,7 +77,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryValidation $request)
     {
         $this->category->find($request->id)->update([
             'id'=>$request->id,

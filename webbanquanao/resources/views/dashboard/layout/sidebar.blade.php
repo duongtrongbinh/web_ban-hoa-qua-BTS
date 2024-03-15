@@ -104,6 +104,12 @@
       </li><!-- End order Nav -->
 
       <li class="nav-heading">Configuration</li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('media')}}">
+          <i class="bi bi-person"></i>
+          <span>Media</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('profileUser')}}">
@@ -113,32 +119,25 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('list_member')}}">
+          <i class="bi bi-person"></i>
+          <span>Khách hàng</span>
+        </a>
+      </li><!-- End Guest Page Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('list_setting')}}">
           <i class="bi bi-question-circle"></i>
           <span>Setting</span>
         </a>
       </li><!-- End setting Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
-
       <li class="nav-heading">Permissions</li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('list_user')}}">
           <i class="ri-file-user-line"></i>
-          <span>List User</span>
+          <span>List Nhân viên</span>
         </a>
       </li><!-- End Role Page Nav -->
 

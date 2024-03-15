@@ -5,10 +5,10 @@ use App\Models\ProductModel;
 
 class deleteCTL{
 
-    function dele($id){
+    function dele($model,$id){
 
     try {
-        ProductModel::find($id)->delete();
+        $model::find($id)->delete();
         return response()->json([
             'code' => 200,
             "message" => "success"

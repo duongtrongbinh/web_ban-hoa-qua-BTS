@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use App\Traits\StorageTraits;
 use App\Models\CategoriesModel;
 use App\Conponents\Recusives;
-
+use App\Jobs\SendOrderConfirmationEmailJob;
+use App\Mail\OrderConfirmationEmail;
+use App\Models\OrderModel;
+use Illuminate\Support\Facades\Mail;
 
 class SlideController extends Controller
 {
@@ -42,7 +45,6 @@ class SlideController extends Controller
      */
     public function create()
     {
-
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.slides.add',compact('htmlSelect'));
     }
@@ -52,13 +54,17 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
-   
-        $imageSlide = $this->storageTraits->storageTraitUploadMuity($request->code_image, 'slide');
+        $request->validate([ 
+                    'title'=> 'required|min:3|max:255',
+                    'description'=> 'required|min:10',
+                    'category_id'=> 'required',
+                    'filepath'=> 'required',
+                ]);
         $this->slide->create([
             'title'=>$request->title,
             'desc'=>$request->description,
-            'name_image'=>$imageSlide['file_name'],
-            'code_image'=>$imageSlide['file_path'],
+            'name_image'=>basename($request->filepath),
+            'code_image'=>$request->filepath,
             'status'=>0,
             'category_id'=>$request->category_id
         ]);
@@ -81,7 +87,9 @@ class SlideController extends Controller
     {
 
         $slide = $this->slide->find($id);
-        return view('dashboard.admin.slides.update',compact('slide'));
+        $htmlSelect = $this->getCategory($slide->category_id);
+        $order_code = "tesst mail";
+        return view('dashboard.admin.slides.update',compact('slide','htmlSelect'));
     }
 
     /**
@@ -89,35 +97,26 @@ class SlideController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        $request->validate([ 
+            'title'=> 'required|min:3|max:255',
+            'desc'=> 'required|min:10',
+            'category_id'=> 'required',
+            'filepath'=>"required"
+        ]);
         $slide = $this->slide->find($id);
-        $imm = $slide->name_image;
-        if((!$request->code_image) || ($imm == $request->code_image)){
-
-            $slide->update([
-                'title'=>$request->title,
-                'desc'=>$request->desc,
-                'name_image'=>$slide->name_image,
-                'code_image'=>$slide->code_image,
-                'status'=>0,
-                'category_id'=>$slide->category_id
-            ]);
-
+        if($request->filepath == 'abc'){
+            return redirect()->route('list_slide');
         }else{
-            $imageSlide = $this->storageTraits->storageTraitUploadMuity($request->code_image, 'slide');
-
                 $slide->update([
                     'title'=>$request->title,
                     'desc'=>$request->desc,
-                    'name_image'=>$imageSlide['file_name'],
-                    'code_image'=>$imageSlide['file_path'],
+                    'name_image'=>basename($request->filepath),
+                    'code_image'=>$request->filepath,
                     'status'=>0,
                     'category_id'=>$slide->category_id
                 ]);
-            
+                return redirect()->route('list_slide');
         } 
-        
-        return redirect()->route('list_slide');
     }
 
     /**

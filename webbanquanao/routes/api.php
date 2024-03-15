@@ -40,10 +40,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/orders', [Pay::class, 'ShowOrder']);
 });
 
-Route::get('/product/{id}', [ProductController::class, 'show']);
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/slides', [HomeController::class, 'index']);
-Route::get('/orders', [Pay::class, 'ShowOrder']);
+    Route::get('/product/{id}', [ProductController::class, 'show']);
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/slides', [HomeController::class, 'index']);
+// Route::get('/orders', [Pay::class, 'ShowOrder']);
 
 
 Route::group(['namespace'=>'APi'], function(){

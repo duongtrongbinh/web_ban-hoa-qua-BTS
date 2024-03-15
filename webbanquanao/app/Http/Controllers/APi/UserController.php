@@ -102,6 +102,8 @@ class UserController extends Controller
             'birthday' => Carbon::now(),
             'desc'=>'No'
         ]);
+        $user->roles()->attach(3);
+
 
         return response(['message' => 'Bạn đã đăng ký tài khoản thành công.'], 200);
     }

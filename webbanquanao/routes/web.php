@@ -83,10 +83,16 @@ Route::prefix('/dashboard')->middleware(['auth','check.admin'])->group(function(
         Route::get('edit/{id}', [UserController::class, 'edit'])->name('edit_user');
         Route::put('update/{id}', [UserController::class, 'updateRole'])->name('update_user');
         Route::get('delete/{id}', [UserController::class, 'destroy'])->name('delete_user');
+
+        Route::get('/memberships', [UserController::class,'showGuest'])->name('list_member');
+        Route::get('addG',[UserController::class,'createGuest'])->name('form_add_member');
+        Route::get('editG/{id}', [UserController::class, 'editGuest'])->name('edit_member');
+
+
     });
     Route::prefix('/order')->group(function (){
-    Route::get('/list', [OrderController::class, 'index'])->name('list_order');
-    Route::get('/detail/{id}', [OrderController::class, 'show'])->name('detail_order');
+        Route::get('/list', [OrderController::class, 'index'])->name('list_order');
+        Route::get('/detail/{id}', [OrderController::class, 'show'])->name('detail_order');
     });
-    
+    Route::view('/media', 'dashboard.admin.media.media')->name('media');
 });

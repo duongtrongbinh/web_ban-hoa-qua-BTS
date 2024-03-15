@@ -17,10 +17,8 @@ use DB;
 use Log;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
-// use App\Imports\ProductExport;
 use App\Exports\ProductExport;
-use App\Conponents\deleteCTL;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -37,9 +35,6 @@ class ProductController extends Controller
         $this->product = new ProductModel();
         $this->imageProduct = new ImageProduct();
         $this->storagetrait = new StorageTraits();
-
-
-
         $productStatus  = ProductStatus::getArrStatus();
         View::share('productStatus', $productStatus);
     }
@@ -58,11 +53,14 @@ class ProductController extends Controller
     {
  
         if ($request->ajax()) {
+            // $data = ProductModel::join('categories', 'products.category_id', '=', 'categories.id')
+            // ->select('products.*', 'categories.name as category_name')
+            // ->get();
             $data = ProductModel::join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.*', 'categories.name as category_name')
-            ->get();
+                ->select('products.*', 'categories.name as category_name')
+                ->paginate(30);
 
-            return Datatables::of($data)
+            return DataTables::of($data->toArray())
                 ->addIndexColumn()
                 ->addColumn('action', function($id){
                     $linkedit =route("edit_product",$id);
@@ -75,7 +73,10 @@ class ProductController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
+                // ->toJson();
         }
+        // return view('dashboard.admin.products.list');
+
     }
     
 
@@ -96,18 +97,19 @@ class ProductController extends Controller
 
         try {
             DB::beginTransaction();
-                $createProduct = $request->except('_token','code');
+                $createProduct = $request->except('_token','filepath');
                 $createProduct['slug'] = Str::slug($request->name);
                 $createProduct['code'] = '#'.Carbon::now()->second.Carbon::now()->minute.Carbon::now()->hour.Carbon::now()->day.Carbon::now()->month.Carbon::now()->year;
                 $productNew = $this->product->create($createProduct);
-                if($request->hasFile('code')){
-                    foreach ($request->code as $item) {
-                        $dataImageMui = $this->storagetrait->storageTraitUploadMuity($item, 'product');
-                        $this->imageProduct->create([
-                            'product_id'=>$productNew->id,
-                            'code_image'=>$dataImageMui['file_path'],
-                            'name'=>$dataImageMui['file_name']
-                        ]);
+                $file_path = $request->input('filepath');
+                if($file_path){
+                    $imageUrls = explode(',', $file_path);
+                        foreach ($imageUrls as $item) {
+                            $this->imageProduct->create([
+                                'product_id'=>$productNew->id,
+                                'code_image'=>$item,
+                                'name'=>basename($item)
+                            ]);  
                     }
                 }
             DB::commit();
@@ -144,19 +146,22 @@ class ProductController extends Controller
             DB::beginTransaction();
 
                 $product = $this->product->find($request->id);
-                $updateProduct = $request->except('_token','code');
+                $updateProduct = $request->except('_token','filepath');
                 $updateProduct['slug'] = Str::slug($request->name);
                 $updateProduct['code'] = $product->code;
                 $productNew = $product->update($updateProduct);
-                if($request->hasFile('code')){
-                    $this->imageProduct->where('product_id',$request->id)->delete();
-                    foreach ($request->code as $item) {
-                        $dataImageMui = $this->storagetrait->storageTraitUploadMuity($item, 'product');
-                        $this->imageProduct->create([
-                            'product_id'=>$request->id,
-                            'code_image'=>$dataImageMui['file_path'],
-                            'name'=>$dataImageMui['file_name']
-                        ]);
+                $file_path = $request->input('filepath');
+                if($file_path !== 'abc'){
+                    $imageUrls = explode(',', $file_path);
+                    if($imageUrls){
+                        $this->imageProduct->where('product_id',$request->id)->delete();
+                        foreach ($imageUrls as $item) {
+                            $this->imageProduct->create([
+                                'product_id'=>$request->id,
+                                'code_image'=>$item,
+                                'name'=>basename($item)
+                            ]);
+                        }
                     }
                 }
             DB::commit();
@@ -172,8 +177,19 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $de = new deleteCTL();
-        $de->dele($id);
+        try {
+            $this->product->find($id)->delete();
+            return response()->json([
+                'code' => 200,
+                "message" => "success"
+            ], 200);
+        } catch (\Exception $exception) {
+            Log::error("message: " . $exception->getMessage());
+            return response()->json([
+                'code' => 500,
+                "message" => "false"
+            ], 500);
+        }
     }
 
     public function fileExport() 

@@ -31,11 +31,11 @@ class OrderController extends Controller
     public function show(string $id){
         $oneOrder = OrderModel::with('order_detail.product.images')->find($id);
         $statusO = StatusBill::values();
-        // $this->pay->StatusOrderB($oneOrder->code);
+        $this->pay->StatusOrderB($oneOrder->code);
         if($oneOrder->status == 7){
             $result = [
                 StatusBill::status1,
-                StatusBill::status7
+                StatusBill::status8
             ];
         }else if($oneOrder->status == 0){
             $result = [StatusBill::status1];

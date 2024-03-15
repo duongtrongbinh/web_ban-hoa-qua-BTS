@@ -9,8 +9,7 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class ProductComponent implements OnInit{
   products:any;
-  url:string = this.urlConfig.url;
-  constructor(private pro: ProductService,private urlConfig: ConfigService){}
+  constructor(private pro: ProductService){}
   ngOnInit(): void {
       this.pro.getProduct().subscribe(data=>{
         console.log(data);

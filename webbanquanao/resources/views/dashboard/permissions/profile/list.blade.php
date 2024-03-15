@@ -1,8 +1,4 @@
 @extends('dashboard.layout.master')
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('admin/assets/js/deleteAll/delete.js') }}"></script>
-@endsection
 @section('content')
 <div class="pagetitle">
   <h1>Dashboard</h1>
@@ -96,8 +92,20 @@
                   <div class="col-md-8 col-lg-9">
                     <img src="{{ $user->image_avatar}}" alt="{{ $user->name_avatar}}">
                     <div class="pt-2">
-                        <input type="file" name="image_avatar" class="form-control">
-                      {{-- <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>  <i class="bi bi-upload"></i>--}}
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
+                            <i class="fa fa-picture-o"></i> Choose
+                          </a>
+                        </span>
+                        <input id="thumbnail" class="form-control" type="hidden" name="filepath" value="{{ $user->image_avatar}}">
+          
+                    </div>
+                    <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                    
+                      @if($errors->has('filepath'))
+                      <span class="text-danger">{{ $errors->first('filepath') }}</span>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -106,6 +114,9 @@
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="name" type="text" class="form-control" id="fullName" value="{{ $user->name}}">
+                    @if($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @endif
                   </div>
                 </div>
 
@@ -113,6 +124,9 @@
                   <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                   <div class="col-md-8 col-lg-9">
                     <textarea name="desc" class="form-control" id="about" style="height: 100px">{{ $user->desc}}</textarea>
+                    @if($errors->has('desc'))
+                    <span class="text-danger">{{ $errors->first('desc') }}</span>
+                    @endif
                   </div>
                 </div>
 
@@ -120,6 +134,9 @@
                   <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="address" type="text" class="form-control" id="Address" value="{{ $user->address}}">
+                    @if($errors->has('address'))
+                    <span class="text-danger">{{ $errors->first('address') }}</span>
+                    @endif
                   </div>
                 </div>
 
@@ -127,13 +144,21 @@
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="phone" type="text" class="form-control" id="Phone" value="{{ $user->phone}}">
+                    @if($errors->has('phone'))
+                    <span class="text-danger">{{ $errors->first('phone') }}</span>
+                    @endif
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="{{ $user->email}}">
+                    <input name="email" type="text" class="form-control" id="Email" value="{{ $user->email}}">
+                    <input name="role" type="hidden" class="form-control" value="1">
+                    <input name="password" type="hidden" class="form-control" value="{{ $user->password}}">
+                    @if($errors->has('email'))
+                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                    @endif
                   </div>
                 </div>
 
@@ -184,5 +209,11 @@
     </div>
   </div>
 </section>
-
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('admin/assets/js/deleteAll/delete.js') }}"></script>
+<script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+<script src="{{ asset('admin/assets/js/product/addProduct.js')}}"></script>
+<script src="/path-to-your-tinymce/tinymce.min.js"></script>
+@endsection
 @endsection

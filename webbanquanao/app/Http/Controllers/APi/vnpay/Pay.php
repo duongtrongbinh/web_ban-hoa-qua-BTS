@@ -11,8 +11,9 @@ use Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use App\Enums\StatusBill;
-
-
+use App\Jobs\SendOrderConfirmationEmailJob;
+use App\Mail\OrderConfirmationEmail;
+use Illuminate\Support\Facades\Mail;
 
 class Pay extends Controller
 {
@@ -44,6 +45,8 @@ class Pay extends Controller
             $xx = $this->saveDb($request->post(),$order_code);
             if($xx == true){
                 if($this->updateQuantityOrder($order_code,$signal = 1)){
+                    $data = OrderModel::where('code',$order_code)->first();
+                    dispatch(new SendOrderConfirmationEmailJob($data,auth()->user()->email));
                     return response()->json($this->url, 200);
                 }
  
@@ -77,6 +80,8 @@ class Pay extends Controller
                 if ($response->successful()) {
                     // Xử lý phản hồi khi request thành công
                     $responseData = $response->json();
+                    $data = OrderModel::where('code',$code)->first();
+                    dispatch(new SendOrderConfirmationEmailJob($data,auth()->user()->email));
                     return redirect()->away($this->url);
     
                 } else {
