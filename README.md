@@ -14,16 +14,16 @@ Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tậ
 
 ## Back End:
 
-/Gồm quản lý tất cả các nội dung của trang website bao gồm: category, slider, blog, product, đơn hàng, thống kê đơn giản và phân quyền quản trị.
-/-Sử dụng được các phần bao gồm database : migration, seeder, factory.
--Sử dụng các phần gồm controller : CRUD và nhiều hơn với làm việc bài bản với Elequent ORM và Query Builder, Relationship.
--Sử dụng các phần model, route bài bản hơn.
--Đã làm việc và sử dụng queue và job trong gửi mail và trong cập nhật trạng thái của đơn hàng khi kết nối với Giao Hàng Nhanh.
--Các tác vụ khác như events, listeners, task scheduing.
--Quản lý hình ảnh với filemanager trong toàn bộ trang website.
--Dùng laravel PassPost để quản lý quyền truy cập phía client.
--Một số nhỏ khác là : cache, session, collections.
+Gồm quản lý tất cả các nội dung của trang website bao gồm: category, slider, blog, product, đơn hàng, thống kê đơn giản và phân quyền quản trị.
+<li>Sử dụng được các phần bao gồm database : migration, seeder, factory.</li>
+<li>Sử dụng các phần gồm controller : CRUD và nhiều hơn với làm việc bài bản với Elequent ORM và Query Builder, Relationship.</li>
+<li>>Sử dụng các phần model, route bài bản hơn.</li>
+<li>Đã làm việc và sử dụng queue và job trong gửi mail và trong cập nhật trạng thái của đơn hàng khi kết nối với Giao Hàng Nhanh.</li>
+<li>Các tác vụ khác như events, listeners, task scheduing.</li>
+<li>Quản lý hình ảnh với filemanager trong toàn bộ trang website.</li>
+<li>Dùng laravel PassPost để quản lý quyền truy cập phía client.</li>
+<li>Một số nhỏ khác là : cache, session, collections.</li>
 
 ## Font End
-Sử dụng và trình bày các dữ liệu nhân được từ phía backend gửi đến. 
-Xử lý một số phần như cart, checkout, login, register.
+<li>Sử dụng và trình bày các dữ liệu nhân được từ phía backend gửi đến. </li>
+<li>Xử lý một số phần như cart, checkout, login, register.</li>
