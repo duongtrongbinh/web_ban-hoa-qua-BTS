@@ -1,5 +1,5 @@
 # web_ban-hoa-qua-BTS
-=======
+
 # MyApp
 
 Trang webite có 2 phần font-end và back-end riêng biệt cùng được xây dựng trên khung framework Laravel.
@@ -23,7 +23,7 @@ Trang webite có 2 phần font-end và back-end riêng biệt cùng được xâ
       <td>12345678</td>
     </tr>
       <tr>
-      <td>quản trị viên</td>
+      <td>Quản trị viên</td>
       <td>binhdtph25966@fpt.edu.vvvv</td>
       <td>12345678</td>
     </tr>
@@ -44,7 +44,7 @@ Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tậ
 Gồm quản lý tất cả các nội dung của trang website bao gồm: category, slider, blog, product, đơn hàng, thống kê đơn giản và phân quyền quản trị.
 <li>Sử dụng được các phần bao gồm database : migration, seeder, factory.</li>
 <li>Sử dụng các phần gồm controller : CRUD và nhiều hơn với làm việc bài bản với Elequent ORM và Query Builder, Relationship.</li>
-<li>>Sử dụng các phần model, route bài bản hơn.</li>
+<li>Sử dụng các phần model, route bài bản hơn.</li>
 <li>Đã làm việc và sử dụng queue và job trong gửi mail và trong cập nhật trạng thái của đơn hàng khi kết nối với Giao Hàng Nhanh.</li>
 <li>Các tác vụ khác như events, listeners, task scheduing.</li>
 <li>Quản lý hình ảnh với filemanager trong toàn bộ trang website.</li>
