@@ -7,7 +7,33 @@ Trang webite có 2 phần font-end và back-end riêng biệt cùng được xâ
 <li>Trang người dùng: https://binhdt.id.vn </li>
 <li>Trang quản trị: https://dashboard.binhdt.id.vn</li>
 
-
+## Các tài khoản
+<table>
+  <thead>
+    <tr>
+    <th>#</th>
+    <th>Email</th>
+    <th>Password</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Admin</td>
+      <td>binhdtph25966@fpt.edu.vn</td>
+      <td>12345678</td>
+    </tr>
+      <tr>
+      <td>quản trị viên</td>
+      <td>binhdtph25966@fpt.edu.vvvv</td>
+      <td>12345678</td>
+    </tr>
+      <tr>
+      <td>Blogger</td>
+      <td>binhdtph25@gmail.com</td>
+      <td>12345678</td>
+    </tr>
+  </tbody>
+</table>
 ## Mô tả dự án:
 
 Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tập đoàn FPT phát triển.
