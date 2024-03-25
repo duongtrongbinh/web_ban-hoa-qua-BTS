@@ -1,31 +1,27 @@
-<<<<<<< HEAD
-# web_ban-hao-qua-BTS
+# web_ban-hoa-qua-BTS
 =======
 # MyApp
+Trang webite có 2 phần font-end và back-end riêng biệt cùng được xây dựng trên khung framework Laravel.
+Trang website đã được deploy phiên bản 1.0 trên hosting của inet (luôn được cập nhật và sửa đổi).
+Trang người dùng: https://binhdt.id.vn 
+Trang quản trị: https://dashboard.binhdt.id.vn
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.1.
+## Mô tả dự án:
 
-## Development server
+Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tập đoàn FPT phát triển.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Back End:
 
-## Code scaffolding
+Gồm quản lý tất cả các nội dung của trang website bao gồm: category, slider, blog, product, đơn hàng, thống kê đơn giản và phân quyền quản trị.
+-Sử dụng được các phần bao gồm database : migration, seeder, factory.
+-Sử dụng các phần gồm controller : CRUD và nhiều hơn với làm việc bài bản với Elequent ORM và Query Builder, Relationship.
+-Sử dụng các phần model, route bài bản hơn.
+-Đã làm việc và sử dụng queue và job trong gửi mail và trong cập nhật trạng thái của đơn hàng khi kết nối với Giao Hàng Nhanh.
+-Các tác vụ khác như events, listeners, task scheduing.
+-Quản lý hình ảnh với filemanager trong toàn bộ trang website.
+-Dùng laravel PassPost để quản lý quyền truy cập phía client.
+-Một số nhỏ khác là : cache, session, collections.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
->>>>>>> master
+## Font End
+Sử dụng và trình bày các dữ liệu nhân được từ phía backend gửi đến. 
+Xử lý một số phần như cart, checkout, login, register.
