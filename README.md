@@ -1,12 +1,13 @@
 # web_ban-hoa-qua-BTS
 =======
 # MyApp
-<ul>
+
 Trang webite có 2 phần font-end và back-end riêng biệt cùng được xây dựng trên khung framework Laravel.
 <li>Trang website đã được deploy phiên bản 1.0 trên hosting của inet (luôn được cập nhật và sửa đổi).</li>
 <li>Trang người dùng: https://binhdt.id.vn </li>
 <li>Trang quản trị: https://dashboard.binhdt.id.vn</li>
-</ul>
+
+
 ## Mô tả dự án:
 
 Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tập đoàn FPT phát triển.
