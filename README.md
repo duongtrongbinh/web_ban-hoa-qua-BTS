@@ -2,9 +2,9 @@
 =======
 # MyApp
 Trang webite có 2 phần font-end và back-end riêng biệt cùng được xây dựng trên khung framework Laravel.
-Trang website đã được deploy phiên bản 1.0 trên hosting của inet (luôn được cập nhật và sửa đổi).
-Trang người dùng: https://binhdt.id.vn 
-Trang quản trị: https://dashboard.binhdt.id.vn
+/Trang website đã được deploy phiên bản 1.0 trên hosting của inet (luôn được cập nhật và sửa đổi).
+/Trang người dùng: https://binhdt.id.vn 
+/Trang quản trị: https://dashboard.binhdt.id.vn
 
 ## Mô tả dự án:
 
@@ -12,8 +12,8 @@ Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tậ
 
 ## Back End:
 
-Gồm quản lý tất cả các nội dung của trang website bao gồm: category, slider, blog, product, đơn hàng, thống kê đơn giản và phân quyền quản trị.
--Sử dụng được các phần bao gồm database : migration, seeder, factory.
+/Gồm quản lý tất cả các nội dung của trang website bao gồm: category, slider, blog, product, đơn hàng, thống kê đơn giản và phân quyền quản trị.
+/-Sử dụng được các phần bao gồm database : migration, seeder, factory.
 -Sử dụng các phần gồm controller : CRUD và nhiều hơn với làm việc bài bản với Elequent ORM và Query Builder, Relationship.
 -Sử dụng các phần model, route bài bản hơn.
 -Đã làm việc và sử dụng queue và job trong gửi mail và trong cập nhật trạng thái của đơn hàng khi kết nối với Giao Hàng Nhanh.
