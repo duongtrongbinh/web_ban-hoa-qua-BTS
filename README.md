@@ -34,6 +34,7 @@ Trang webite có 2 phần font-end và back-end riêng biệt cùng được xâ
     </tr>
   </tbody>
 </table>
+
 ## Mô tả dự án:
 
 Lấy ý tưởng từ trang sendoFarm là trang bán nông sản sạch do tập đoàn FPT phát triển.
