@@ -6,6 +6,7 @@ use App\Http\Controllers\APi\HomeController;
 use App\Http\Controllers\APi\UserController;
 use App\Http\Controllers\APi\ProductController;
 use App\Http\Controllers\APi\BlogController;
+use App\Http\Controllers\APi\OrderController;
 use App\Http\Controllers\APi\vnpay\Pay;
 use App\Models\User;
 
@@ -38,10 +39,14 @@ Route::middleware('auth:api')->group(function () {
     // product, blog, comment product, comment blog, account, profile account, seeting, slide, cart, pay
     Route::post('/bill', [Pay::class, 'medium1']);
     Route::post('/orders', [Pay::class, 'ShowOrder']);
+    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::post('/order_detail/{id}', [OrderController::class,'showOrderDetail']);
 });
 
     Route::get('/product/{id}', [ProductController::class, 'show']);
     Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/productShop', [ProductController::class, 'shop']);
+
     Route::get('/slides', [HomeController::class, 'index']);
 // Route::get('/orders', [Pay::class, 'ShowOrder']);
 

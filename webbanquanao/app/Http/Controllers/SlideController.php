@@ -35,7 +35,7 @@ class SlideController extends Controller
     public function index()
     {
 
-        $list = $this->slide->all();
+        $list = $this->slide->paginate();
         return view('dashboard.admin.slides.list',compact('list'));
     }
 

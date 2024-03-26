@@ -53,7 +53,7 @@
         </tbody>
       </table>
       <!-- End Table with stripped rows -->
-
+{{$list->links()}}
     </div>
 </div>
 @endsection

@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         $listUser = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'guest');
-        })->get();
+        })->paginate(20);
         return view('dashboard.permissions.role.list',compact('listUser'));
     }
 
@@ -97,7 +97,7 @@ class UserController extends Controller
     {
         $guestUsers = User::with('roles')->whereHas('roles', function ($query) {
             $query->where('name', 'guest');
-        })->get();
+        })->paginate(20);
         return view('dashboard.admin.guests.guest',compact('guestUsers'));
 
     }

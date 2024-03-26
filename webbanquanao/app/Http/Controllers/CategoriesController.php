@@ -27,7 +27,7 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        $list = $this->category->all();
+        $list = $this->category->paginate();
         $htmlSelect = $this->getCategory($parentid = "");
         return view('dashboard.admin.categories.list',compact('list','htmlSelect'));
     }

@@ -20,12 +20,6 @@
     </nav>
   </div>
 
-{{-- <style>
-  .c{
-    justify-content:space-between
-  }
-</style> --}}
-
 <div class="card">
     <div class="card-body mt-5">
 
@@ -34,7 +28,6 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th>Code</th>
             <th>Name</th>
             <th>Category</th>
             <th>Quantity</th>
@@ -43,10 +36,25 @@
           </tr>
         </thead>
         <tbody>
+          @foreach ($data as $key =>$value)
+          <tr>
+            <td>{{$key +1}}</td>
+            <td>{{ $value->name}}</td>
+            <td>{{ $value->category_name}}</td>
+            <td>{{ $value->quantity}}</td>
+            <td>{{ number_format($value->price)}}</td>
+            <td>
+              <a href='{{ route("edit_product",$value->id)}}' class='btn btn-success btn-sm' style='margin-right: 5px'>Edit</a>
+              <a data-url='{{ route("delete_product",$value->id)}}' class='btn btn-danger btn-sm deleteProduct'>Delete</a>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+        <tbody>
         </tbody>
       </table>
       <!-- End Table with stripped rows -->
-
+      {{ $data->links()}}
     </div>
   </div>
 @endsection
@@ -54,7 +62,7 @@
 <script src="{{ asset('admin/assets/vendor/datatable/index.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('admin/assets/js/deleteAll/delete.js') }}"></script>
-<script>
+{{-- <script>
   $(function () {
     // $.fn.dataTable.ext.errMode = 'throw';
     let table = $('.datatableProduct').DataTable({
@@ -78,7 +86,7 @@
     });
     
   });
-</script>
+</script> --}}
 @endsection
 
 

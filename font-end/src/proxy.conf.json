@@ -1,6 +1,0 @@
-{
-    "/api": {
-        "target": "https://binhdt.id.vn",
-        "secure": false
-    }
- }

@@ -55,7 +55,7 @@
         </tbody>
       </table>
       <!-- End Table with stripped rows -->
-
+{{ $guestUsers->links()}}
     </div>
 </div>
 

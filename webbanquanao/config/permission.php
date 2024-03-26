@@ -25,6 +25,12 @@ return [
         'add-setting' =>'add-setting',
         'edit-setting' =>'edit-setting',
         'list-setting' =>'list-setting',
-        'delete-setting' =>'delete-setting'
+        'delete-setting' =>'delete-setting',
+        'add-order' =>'add-order',
+        'edit-order' =>'edit-order',
+        'list-order' =>'list-order',
+        'delete-order' =>'delete-order',
+        'list-role'=> 'list-role',
+
     ]
 ];

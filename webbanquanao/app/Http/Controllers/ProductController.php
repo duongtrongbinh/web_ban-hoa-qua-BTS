@@ -39,7 +39,7 @@ class ProductController extends Controller
         View::share('productStatus', $productStatus);
     }
     public function getCategory($parentid){
-        $data = $this->category->all();
+        $data = $this->category->paginate();
         $recusive = new Recusives($data);
         $htmlSelect = $recusive->categoryRecusive($parentid);
         return $htmlSelect;
@@ -51,31 +51,26 @@ class ProductController extends Controller
     }
     public function index(Request $request)
     {
- 
-        if ($request->ajax()) {
-            // $data = ProductModel::join('categories', 'products.category_id', '=', 'categories.id')
-            // ->select('products.*', 'categories.name as category_name')
-            // ->get();
             $data = ProductModel::join('categories', 'products.category_id', '=', 'categories.id')
                 ->select('products.*', 'categories.name as category_name')
                 ->paginate(30);
 
-            return DataTables::of($data->toArray())
-                ->addIndexColumn()
-                ->addColumn('action', function($id){
-                    $linkedit =route("edit_product",$id);
-                    $linkDelete = route("delete_product",$id);
-                    $actionBtn = "<a href='$linkedit' class='btn btn-success btn-sm' style='margin-right: 5px'>Edit</a><a data-url='$linkDelete' class='btn btn-danger btn-sm deleteProduct'>Delete</a>";
-                    return $actionBtn;
-                })
-                ->editColumn('price', function($object){
-                    return number_format($object->price)." VND";
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            // return DataTables::of($data->toArray())
+            //     ->addIndexColumn()
+            //     ->addColumn('action', function($id){
+            //         $linkedit =route("edit_product",$id);
+            //         $linkDelete = route("delete_product",$id);
+            //         $actionBtn = "<a href='$linkedit' class='btn btn-success btn-sm' style='margin-right: 5px'>Edit</a><a data-url='$linkDelete' class='btn btn-danger btn-sm deleteProduct'>Delete</a>";
+            //         return $actionBtn;
+            //     })
+            //     ->editColumn('price', function($object){
+            //         return number_format($object->price)." VND";
+            //     })
+            //     ->rawColumns(['action'])
+            //     ->make(true);
                 // ->toJson();
-        }
-        // return view('dashboard.admin.products.list');
+        // }
+        return view('dashboard.admin.products.list',compact('data'));
 
     }
     
@@ -97,9 +92,10 @@ class ProductController extends Controller
 
         try {
             DB::beginTransaction();
-                $createProduct = $request->except('_token','filepath');
+                $createProduct = $request->except('filepath');
                 $createProduct['slug'] = Str::slug($request->name);
-                $createProduct['code'] = '#'.Carbon::now()->second.Carbon::now()->minute.Carbon::now()->hour.Carbon::now()->day.Carbon::now()->month.Carbon::now()->year;
+                $createProduct['code'] = '#'.now();
+                // $createProduct['code'] = '#'.Carbon::now()->second.Carbon::now()->minute.Carbon::now()->hour.Carbon::now()->day.Carbon::now()->month.Carbon::now()->year;
                 $productNew = $this->product->create($createProduct);
                 $file_path = $request->input('filepath');
                 if($file_path){
@@ -146,7 +142,7 @@ class ProductController extends Controller
             DB::beginTransaction();
 
                 $product = $this->product->find($request->id);
-                $updateProduct = $request->except('_token','filepath');
+                $updateProduct = $request->except('filepath');
                 $updateProduct['slug'] = Str::slug($request->name);
                 $updateProduct['code'] = $product->code;
                 $productNew = $product->update($updateProduct);
@@ -165,7 +161,7 @@ class ProductController extends Controller
                     }
                 }
             DB::commit();
-            return redirect()->route('show_list_product');
+            return redirect()->route('list_product');
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error("message: " . $exception->getMessage());

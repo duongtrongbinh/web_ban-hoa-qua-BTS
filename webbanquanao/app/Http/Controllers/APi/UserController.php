@@ -79,18 +79,19 @@ class UserController extends Controller
     public function register(Request $request){
         $this->validate($request, [
             'name' => 'required|min:3|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:7',
+            'email' => 'required|email',
+            'password' => 'required|min:7',
         ]
         , [
             "name.required" => "Vui lòng nhập name của bạn.",
             "email.required" => "Vui lòng nhập email của bạn.",
             "email.unique" => "Địa chỉ email này đã tồn tại trên hệ thống.",
             "password.required" => "Vui lòng nhập password của bạn.",
-            "password.confirmed" => "Mật khẩu không trùng khớp.",
             "email.email" => "Vui lòng nhập đúng định dạng email."
 
         ]);
+        $exists = User::where('email', $request->email)->exists();
+        if(!$exists){
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -102,10 +103,15 @@ class UserController extends Controller
             'birthday' => Carbon::now(),
             'desc'=>'No'
         ]);
+        if($user){
         $user->roles()->attach(3);
-
-
-        return response(['message' => 'Bạn đã đăng ký tài khoản thành công.'], 200);
+            return response()->json(['message1' => 'Bạn đã đăng ký tài khoản thành công.'], 200);
+        }else{
+            return response()->json(['message2'=> 'Đăng ký thát bại'], 401);
+        }
+    }else{
+        return response()->json(['message3'=> 'Email đã đăng ký với trang web.'], 401);
+    }
     }
 
     /**
@@ -129,7 +135,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+        return response()->json($user,200);
     }
 
     /**

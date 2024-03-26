@@ -120,7 +120,7 @@
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
+                        {{ $order['status1']->links()}}
                         </div>
                     </div>
                 <!-- End Profile order Form -->
@@ -187,6 +187,7 @@
                     </tbody>
                 </table>
                 <!-- End Table with stripped rows -->
+                {{ $order['status2']->links()}}
 
                 </div>
             </div>
@@ -217,7 +218,7 @@
                     <tbody> 
                     @foreach ($order['status4'] as $item)
                             <tr>
-                                <th scope="row">{{ $loop->index + 1}}</th>
+                                <td scope="row">{{ $loop->index + 1}}</td>
                                 <td>{{ $item->code}}</td>
                                 <td>
                                     <div class="container">
@@ -231,18 +232,15 @@
                                 <td>{{ number_format($item->moneyship, 0, ',', '.')}} VND</td>
                                 <td>{{ $item->payment_id == 1 ? "Đã thanh toán" : "chưa thanh toán";}}</td>
                                 <td>{{ $item->payment_id == 1 ? "Thanh toán vnpay" : "Thanh toán khi nhận hàng";}}</td>
+                                <td>
                                 @foreach ($statusO as $index => $statusLabel)
                                     @if ($index == $item->status)
-                                        <td> {{ $statusLabel }}</td>
+                                         {{ $statusLabel }}
                                     @endif
                                 @endforeach
+                            </td>
                                 <td>
-                                {{-- @can('update', App\Models\CategoriesModel::class)   --}}
                                     <a  href="{{ route('detail_order',[$item->id])}}" class="btn btn-success" selected>Detail</a>
-                                {{-- @endcan --}}
-                                {{-- @can('delete', App\Models\CategoriesModel::class) --}}
-                                    {{-- <a data-url="{{ route('detail_order',[$item->id])}}" class="btn btn-warning deleteCategory">Delete</a> --}}
-                                {{-- @endcan --}}
                                 </td>
                             </tr>
     
@@ -251,6 +249,7 @@
                     </tbody>
                 </table>
                 <!-- End Table with stripped rows -->
+                {{ $order['status4']->links()}}
 
                 </div>
             </div>
@@ -303,7 +302,7 @@
                                     @if ($index == $item->status)
                                         <td> {{ $statusLabel }}</td>
                                     @endif
-                                <td>
+                                
                                 @endforeach
 
                                 {{-- @can('update', App\Models\CategoriesModel::class)   --}}
@@ -320,6 +319,7 @@
                     </tbody>
                 </table>
                 <!-- End Table with stripped rows -->
+                {{ $order['status3']->links()}}
 
                 </div>
             </div>
@@ -329,5 +329,5 @@
         <!-- End Bordered Tabs -->
       </div>
     </div>
-  </div>
+</div>
 @endsection

@@ -18,9 +18,11 @@
     <div class="card-body">
       <h5 class="card-title">List nhân viên</h5>
       <div class="d-flex justify-content-end mt-2 mb-2">
+        @can('add-user')
         <a href="{{ route('form_add_user')}}" class="btn btn-primary mb-3 bt-3" >
-            Add User 
-          </a>
+          Add Nhan vien 
+        </a>
+        @endcan
         </div>
       <!-- Table with stripped rows -->
       <table class="table table-striped">
@@ -50,8 +52,12 @@
               @endforeach
             </td>
             <td>
+              @can("edit-user")
                 <a href="{{ route('edit_user',[$item->id])}}" class="btn btn-success">Edit</a>
+              @endcan
+              @can('delete-user')
                 <a data-url="{{ route('delete_user',[$item->id])}}" class="btn btn-warning deleteUser">Delete</a>
+              @endcan
             </td>
             @endforeach
           </tr>

@@ -18,7 +18,8 @@ class ProductController extends Controller
 
     public function show(string $id)
     {
-        $product = ProductModel::with('images')->find($id);
+        $product = ProductModel::find($id);
+        $product->load('images');
         if ($product) {
             // Bạn có thể sử dụng dữ liệu của bản ghi ở đây
         return response()->json($product);
@@ -31,7 +32,14 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = ProductModel::with('images')->paginate(15);
+        $products = ProductModel::paginate(8);
+        $products->load('images');
+        return response()->json($products);
+    }
+    public function shop()
+    {
+        $products = ProductModel::paginate(15);
+        $products->load('images');
         return response()->json($products);
     }
 

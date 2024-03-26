@@ -6,11 +6,15 @@ use App\Policies\CategoryPolicy;
 use App\Models\ProductModel;
 use App\Policies\ProductPolicy;
 use App\Models\BlogModel;
+use App\Models\OrderModel;
 use App\Policies\BlogPolicy;
 use App\Models\SettingModel;
 use App\Policies\SettingPolicy;
 use App\Models\SlideModel;
+use App\Models\User;
+use App\Policies\OrderPolicy;
 use App\Policies\SlidePolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Support\Facades\Gate;
@@ -33,6 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         BlogModel::class => BlogPolicy::class,
         SettingModel::class => SettingPolicy::class,
         SlideModel::class => SlidePolicy::class,
+        User::class => UserPolicy::class,
+        OrderModel::class => OrderPolicy::class
     ];
 
     /**
@@ -69,5 +75,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit-slide', [SlidePolicy::class , 'update']);
         Gate::define('delete-slide', [SlidePolicy::class , 'delete']);
 
+        Gate::define('list-user', [UserPolicy::class , 'viewAny']);
+        Gate::define('add-user', [UserPolicy::class , 'create']);
+        Gate::define('edit-user', [UserPolicy::class , 'update']);
+        Gate::define('delete-user', [UserPolicy::class , 'delete']);
+
+
+        
+        Gate::define('list-order', [OrderPolicy::class , 'viewAny']);
+        Gate::define('edit-order', [OrderPolicy::class , 'view']);
+        Gate::define('list-role', [OrderPolicy::class , 'create']);
     }
 }

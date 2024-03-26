@@ -21,7 +21,7 @@ class UserPolicy
      */
     public function view(User $user): bool
     {
-        return $user->checkPermission(config('permission.access.list-user'));
+        // return $user->checkPermission(config('permission.access.list-user'));
         
     }
 

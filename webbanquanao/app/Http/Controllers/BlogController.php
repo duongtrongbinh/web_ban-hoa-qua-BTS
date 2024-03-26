@@ -21,7 +21,7 @@ class BlogController extends Controller
      */
     public function show()
     {
-        $listBlog = $this->blog->get();
+        $listBlog = $this->blog->paginate();
         return view('dashboard.admin.blogs.list',compact('listBlog'));
     }
     // public function index(Request $request)

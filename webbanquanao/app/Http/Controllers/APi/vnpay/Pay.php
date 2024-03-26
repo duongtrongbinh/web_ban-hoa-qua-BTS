@@ -27,6 +27,7 @@ class Pay extends Controller
 
     public function medium1(Request $request){
         $data = $request->post();
+        
         if($data['data1']['TT'] == 'VNPAYQR'){
             $order_code = $this->apiOrderGhn($request->post());
             $xx = $this->saveDb($request->post(),$order_code);
@@ -42,12 +43,13 @@ class Pay extends Controller
             
         }else{
             $order_code = $this->apiOrderGhn($request->post());
+
             $xx = $this->saveDb($request->post(),$order_code);
             if($xx == true){
                 if($this->updateQuantityOrder($order_code,$signal = 1)){
                     $data = OrderModel::where('code',$order_code)->first();
                     dispatch(new SendOrderConfirmationEmailJob($data,auth()->user()->email));
-                    return response()->json($this->url, 200);
+                    return response()->json(env('url_font'), 200);
                 }
  
             }
@@ -62,7 +64,7 @@ class Pay extends Controller
         $dd = $request->input('vnp_ResponseCode');
         $code = $request->input('vnp_OrderInfo');
         if($dd == "00" ){
-                return redirect()->away($this->url);
+                return redirect()->away(env('url_font'));
             
         }else{
             $re = $this->updateQuantityOrder($code,$signal = "huy");
@@ -82,11 +84,11 @@ class Pay extends Controller
                     $responseData = $response->json();
                     $data = OrderModel::where('code',$code)->first();
                     dispatch(new SendOrderConfirmationEmailJob($data,auth()->user()->email));
-                    return redirect()->away($this->url);
+                    return redirect()->away(env('url_font_return'));
     
                 } else {
                     // Xử lý phản hồi khi request không thành công
-                return redirect()->away($this->url);
+                return redirect()->away(env('url_font_return'));
                 }
             }
 
@@ -217,7 +219,7 @@ class Pay extends Controller
             $jsonData["payment_type_id"]=2;
             $jsonData["cod_amount"]=$data['data']['insurance_value'];
         }
-
+        
         // Gửi POST request với dữ liệu
         // ::withHeaders($headers)->
         $headers = [
@@ -243,11 +245,31 @@ class Pay extends Controller
     }
 
     public function ShowOrder(Request $request){
-        $data = OrderModel::where('user_id', $request->user_id)->with('order_detail.product.images')->get();
-        foreach( $data as $key){
-            $this->StatusBill($key['code']);
-        }
-        return response()->json($data, 200);
+        
+        $data = OrderModel::where('user_id', $request->id)->get();
+        // dd($request->id);
+        $order = [
+            'status1' => $data->filter(function ($item) {
+                return in_array($item->status, [0, 1, 2, 3]);
+            }),
+            'status2' => $data->filter(function ($item) {
+                return in_array($item->status, [4, 5]);
+            }),
+            'status3' => $data->filter(function ($item) {
+                return $item->status == 6;
+            }),
+            'status4' => $data->filter(function ($item) {
+                return $item->status == 7;
+            })
+        ];
+        
+            $statusO = StatusBill::values();
+            $data1 = [
+                'order'=>$order,
+                'statusO'=>$statusO
+            ];
+            return response()->json($data1,200);
+            // return response()->json(['order','statusO'],200);
     }
 
     public function updateQuantityOrder($code,$signal){

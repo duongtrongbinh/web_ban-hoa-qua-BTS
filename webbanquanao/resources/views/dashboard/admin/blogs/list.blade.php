@@ -48,6 +48,7 @@
         </tbody>
       </table>
       <!-- End Table with stripped rows -->
+      {{ $listBlog->links()}}
 
     </div>
 </div>

@@ -31,8 +31,8 @@ Route::prefix('/dashboard')->middleware(['auth','check.admin'])->group(function(
     Route::view('/','dashboard.admin.trangchu')->name('/dashboard');
     // Route::get('/','UserController@list')->name('/dashboard');
     Route::prefix('/product')->group(function (){
-        Route::get('', [ProductController::class, 'show'])->middleware('can:list-product')->name('show_list_product');
-        Route::get('/list', [ProductController::class, 'index'])->name('list_product');
+        // Route::get('', [ProductController::class, 'show'])->middleware('can:list-product')->name('show_list_product');
+        Route::get('/list', [ProductController::class, 'index'])->middleware('can:list-product')->name('list_product');
         Route::get('/export', [ProductController::class, 'fileExport'])->name('export_list_product');
         Route::get('add',[ProductController::class,'create'])->middleware('can:add-product')->name('form_add_product');
         Route::post('add', [ProductController::class, 'store'])->name('add_product');
@@ -95,4 +95,5 @@ Route::prefix('/dashboard')->middleware(['auth','check.admin'])->group(function(
         Route::get('/detail/{id}', [OrderController::class, 'show'])->name('detail_order');
     });
     Route::view('/media', 'dashboard.admin.media.media')->name('media');
+    Route::get('/bill/return', [Pay::class,'pay_return']);
 });

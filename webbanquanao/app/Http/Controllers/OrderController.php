@@ -18,10 +18,10 @@ class OrderController extends Controller
     function index(){
         $this->pay->getBill();
         $order = [
-        'status1'=> OrderModel::where('status' ,[0,1,2,3])->get(),
-        'status2'=> OrderModel::where('status' ,[4,5])->get(),
-        'status3'=> OrderModel::where('status' ,6)->get(),
-        'status4'=> OrderModel::where('status' ,7)->get()
+        'status1'=> OrderModel::where('status' ,[0,1,2,3])->paginate(30),
+        'status2'=> OrderModel::where('status' ,[4,5])->paginate(30),
+        'status3'=> OrderModel::where('status' ,6)->paginate(30),
+        'status4'=> OrderModel::where('status' ,7)->paginate(30)
     ];
         $statusO = StatusBill::values();
         return view('dashboard.admin.bills.list',compact(['order',"statusO"]));
@@ -42,6 +42,7 @@ class OrderController extends Controller
         }else{
             $result = array_slice($statusO, 0, $oneOrder->status);
         }
+        
         return view('dashboard.admin.bills.detail',compact(['oneOrder',"result","statusO"]));
 
     }
